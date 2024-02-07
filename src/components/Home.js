@@ -132,7 +132,7 @@ export default function Home() {
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to="/detail/id">
+                      <Link to="/detail/1">
                         <span aria-hidden="true" className="absolute inset-0" />
                         {product.name}
                       </Link>
