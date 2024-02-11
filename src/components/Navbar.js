@@ -6,7 +6,7 @@ const navigation = [
   { name: "Learning Management System", href: "#", current: true },
   { name: "Home", href: "/", current: false },
   { name: "Courses", href: "#", current: false },
-  { name: "Instructors", href: "#", current: false },
+  { name: "Instructors", href: "/teacher-register", current: false },
   { name: "User Login", href: "/user-login", current: false },
   { name: "User Register", href: "/user-register", current: false },
 ];
@@ -112,6 +112,19 @@ export default function Navbar() {
                           >
                             Settings
                           </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/user-dashboard"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Dashboard
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>

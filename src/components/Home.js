@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
 const trending = [
   {
     id: 1,
@@ -106,6 +108,9 @@ const teacher = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "Home";
+  });
   return (
     <>
       {/* // Trending Section */}
@@ -188,7 +193,7 @@ export default function Home() {
               Featured Teachers
             </h2>
             <h2 className="text-xl font-bold tracking-tight text-gray-900">
-              <a href="#">See All</a>
+              <Link to="/teachers">See All</Link>
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -222,7 +227,7 @@ export default function Home() {
           Reviews
         </h2>
         <h2 className="text-xl font-bold tracking-tight text-gray-900">
-          <a href="#">See All</a>
+          <Link to="/teachers">See All</Link>
         </h2>
       </div>
       <div class="mx-auto my-10 max-w-6xl grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2 bg-white dark:bg-gray-800">
