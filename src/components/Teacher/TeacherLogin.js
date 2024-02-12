@@ -1,8 +1,51 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
+const baseurl = "http://localhost:8000/api";
 const TeacherLogin = () => {
+  const [teacherLogin, setTeacherLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setTeacherLogin({
+      ...teacherLogin,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    const teacherLoginForm = new FormData();
+    teacherLoginForm.append("email", teacherLogin.email);
+    teacherLoginForm.append("password", teacherLogin.password);
+    try {
+      axios
+        .post(baseurl + "/teachers/login/", teacherLoginForm)
+        .then((response) => {
+          if ((response.data.bool = true)) {
+            localStorage.setItem("teacherLoginStatus", true);
+            window.location.href = "/";
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    event.preventDefault();
+  };
+
+  const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
+  if (teacherLoginStatus === "true") {
+    window.location.href = "/";
+  }
+
+  useEffect(() => {
+    document.title = "Teacher Login";
+  }, []);
+
   return (
-    <div class="relative mx-auto w-full max-w-md bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10">
+    <div class="mt-10 relative mx-auto w-full max-w-md bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10">
       <div class="w-full">
         <div class="text-center">
           <h1 class="text-3xl font-semibold text-gray-900">Sign in</h1>
@@ -14,6 +57,8 @@ const TeacherLogin = () => {
               <input
                 type="email"
                 name="email"
+                onChange={handleChange}
+                value={teacherLogin.email}
                 id="email"
                 placeholder="Email Address"
                 class="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
@@ -30,6 +75,8 @@ const TeacherLogin = () => {
               <input
                 type="password"
                 name="password"
+                onChange={handleChange}
+                value={teacherLogin.password}
                 id="password"
                 placeholder="Password"
                 class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
@@ -43,6 +90,7 @@ const TeacherLogin = () => {
             </div>
             <div class="my-6">
               <button
+                onClick={handleSubmit}
                 type="submit"
                 class="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
               >

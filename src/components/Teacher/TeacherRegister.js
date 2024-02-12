@@ -48,6 +48,12 @@ const TeacherRegister = () => {
       setTeacherData({ status: "error" });
     }
   };
+
+  const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
+  if (teacherLoginStatus === "true") {
+    window.location.href = "/";
+  }
+
   useEffect(() => {
     document.title = "Teacher Registration";
   });

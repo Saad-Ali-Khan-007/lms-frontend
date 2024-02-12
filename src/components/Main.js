@@ -12,6 +12,7 @@ import Mycourses from "./User/Mycourses";
 import TeacherRegister from "./Teacher/TeacherRegister";
 import TeacherLogin from "./Teacher/TeacherLogin";
 import Teachers from "./Teachers";
+import TeacherLogout from "./Teacher/TeacherLogout";
 
 const Main = () => {
   return (
@@ -25,6 +26,7 @@ const Main = () => {
         <Route path="/user-register" element={<Register />}></Route>
         <Route path="/teacher-register" element={<TeacherRegister />}></Route>
         <Route path="/teacher-login" element={<TeacherLogin />}></Route>
+        <Route path="/teacher-logout" element={<TeacherLogout />}></Route>
         <Route path="/teachers" element={<Teachers />}></Route>
         <Route path="/user-dashboard" element={<Dashboard />}>
           <Route path="my-courses" element={<Mycourses />}></Route>
