@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,7 +7,7 @@ const baseurl = "http://localhost:8000/api";
 const AddCourses = () => {
   const [cats, setCats] = useState([]);
   const [courseData, setCourseData] = useState({
-    category: "",
+    course_category: "",
     title: "",
     description: "",
     featured_img: "",
@@ -32,7 +31,8 @@ const AddCourses = () => {
     });
   };
 
-  console.log(courseData);
+  // console.log(courseData);
+
   const handleFileChange = (e) => {
     setCourseData({
       ...courseData,
@@ -42,16 +42,31 @@ const AddCourses = () => {
 
   const handleSubmit = (e) => {
     const _formData = new FormData();
-    _formData.append("category", courseData.category),
-      _formData.append("teacher", 1),
-      _formData.append("title", courseData.title),
-      _formData.append("description", courseData.description),
-      _formData.append(
-        "featured_img",
-        courseData.featured_img,
-        courseData.featured_img.name
-      ),
-      _formData.append("techs", courseData.techs);
+    _formData.append("course_category", courseData.course_category);
+    _formData.append("teachers_category", 1);
+    _formData.append("title", courseData.title);
+    _formData.append("description", courseData.description);
+    _formData.append(
+      "featured_img",
+      courseData.featured_img,
+      courseData.featured_img.name
+    );
+    _formData.append("techs", courseData.techs);
+
+    try {
+      axios
+        .post(baseurl + "/course/", _formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -72,13 +87,15 @@ const AddCourses = () => {
             </label>
             <div class="mt-1 rounded-md shadow-sm">
               <select
-                name="category"
+                name="course_category"
                 onChange={handleChange}
                 value={courseData.category}
                 class="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               >
                 {cats.map((cat, index) => (
-                  <option key={index}>{cat.title}</option>
+                  <option value={cat.id} key={index}>
+                    {cat.title}
+                  </option>
                 ))}
               </select>
             </div>
@@ -133,9 +150,9 @@ const AddCourses = () => {
               <input
                 id="image"
                 name="featured_img"
-                onChange={handleChange}
+                onChange={handleFileChange}
                 type="file"
-                value={courseData.featured_img}
+                // value={courseData.featured_img}
                 required=""
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
