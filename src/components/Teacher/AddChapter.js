@@ -1,67 +1,51 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useParams } from "react-router-dom";
 const baseurl = "http://localhost:8000/api";
 
-const AddCourses = () => {
-  const [cats, setCats] = useState([]);
-  const [courseData, setCourseData] = useState({
-    course_category: "",
+const AddChapter = () => {
+  const { course_id } = useParams();
+  const [courseChapter, setCourseChapter] = useState({
     title: "",
     description: "",
-    featured_img: "",
-    techs: "",
+    video: "",
+    remarks: "",
   });
 
-  const getData = () => {
-    try {
-      axios.get(baseurl + "/category/").then((response) => {
-        setCats(response.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleChange = (e) => {
-    setCourseData({
-      ...courseData,
+    setCourseChapter({
+      ...courseChapter,
       [e.target.name]: e.target.value,
     });
   };
 
-  // console.log(courseData);
+  // console.log(courseChapter);
 
   const handleFileChange = (e) => {
-    setCourseData({
-      ...courseData,
+    setCourseChapter({
+      ...courseChapter,
       [e.target.name]: e.target.files[0],
     });
   };
 
   const handleSubmit = (e) => {
     const _formData = new FormData();
-    _formData.append("course_category", courseData.course_category);
-    _formData.append("teachers_category", 1);
-    _formData.append("title", courseData.title);
-    _formData.append("description", courseData.description);
-    _formData.append(
-      "featured_img",
-      courseData.featured_img,
-      courseData.featured_img.name
-    );
-    _formData.append("techs", courseData.techs);
+    _formData.append("course", course_id);
+    _formData.append("title", courseChapter.title);
+    _formData.append("description", courseChapter.description);
+    _formData.append("video", courseChapter.video, courseChapter.video.name);
+    _formData.append("remarks", courseChapter.remarks);
 
     try {
       axios
-        .post(baseurl + "/course/", _formData, {
+        .post(baseurl + "/chapter/", _formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
-          window.location.href = "/teacher-dashboard/add-courses/";
+          window.location.href = `/teacher-dashboard/add-chapter/${course_id}`;
         });
     } catch (error) {
       console.log(error);
@@ -70,7 +54,6 @@ const AddCourses = () => {
   };
 
   useEffect(() => {
-    getData();
     document.title = "Add Course";
   }, []);
 
@@ -80,32 +63,10 @@ const AddCourses = () => {
         <form method="POST" action="#">
           <div class="mt-6">
             <label
-              for="category"
-              class="block text-sm font-medium leading-5 text-gray-700"
-            >
-              Category
-            </label>
-            <div class="mt-1 rounded-md shadow-sm">
-              <select
-                name="course_category"
-                onChange={handleChange}
-                value={courseData.category}
-                class="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-              >
-                {cats.map((cat, index) => (
-                  <option value={cat.id} key={index}>
-                    {cat.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div class="mt-6">
-            <label
               for="title"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Course Title
+              Title
             </label>
             <div class="mt-1 rounded-md shadow-sm">
               <input
@@ -114,7 +75,7 @@ const AddCourses = () => {
                 onChange={handleChange}
                 type="text"
                 required=""
-                value={courseData.title}
+                value={courseChapter.title}
                 class="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -133,7 +94,7 @@ const AddCourses = () => {
                 onChange={handleChange}
                 type="text"
                 required=""
-                value={courseData.description}
+                value={courseChapter.description}
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -141,18 +102,17 @@ const AddCourses = () => {
 
           <div class="mt-6">
             <label
-              for="image"
+              for="video"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Image
+              Video
             </label>
             <div class="mt-1 rounded-md shadow-sm">
               <input
-                id="image"
-                name="featured_img"
+                id="video"
+                name="video"
                 onChange={handleFileChange}
                 type="file"
-                // value={courseData.featured_img}
                 required=""
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
@@ -160,19 +120,19 @@ const AddCourses = () => {
           </div>
           <div class="mt-6">
             <label
-              for="technology"
+              for="remarks"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Technologies
+              Remarks
             </label>
             <div class="mt-1 rounded-md shadow-sm">
-              <input
-                id="technology"
-                name="techs"
+              <textarea
+                id="remarks"
+                name="remarks"
                 onChange={handleChange}
                 type="text"
                 required=""
-                value={courseData.techs}
+                value={courseChapter.remarks}
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -195,4 +155,4 @@ const AddCourses = () => {
   );
 };
 
-export default AddCourses;
+export default AddChapter;

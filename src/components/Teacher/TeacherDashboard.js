@@ -9,7 +9,6 @@ const TeacherDashboard = () => {
   return (
     <div className="flex justify-evenly mt-4">
       <TeacherSidebar />
-
       <Outlet />
     </div>
   );
