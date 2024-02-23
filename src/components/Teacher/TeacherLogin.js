@@ -24,7 +24,7 @@ const TeacherLogin = () => {
       axios
         .post(baseurl + "/teachers/login/", teacherLoginForm)
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           if (response.data.bool == true) {
             localStorage.setItem("teacherLoginStatus", true);
             localStorage.setItem("teacher_id", response.data.teacher_id);

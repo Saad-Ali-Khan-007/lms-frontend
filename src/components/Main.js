@@ -17,6 +17,8 @@ import TeacherDashboard from "./Teacher/TeacherDashboard";
 import TeacherCourses from "./Teacher/TeacherCourses";
 import AddCourses from "./Teacher/AddCourses";
 import AddChapter from "./Teacher/AddChapter";
+import AllChapter from "./Teacher/AllChapter";
+
 const Main = () => {
   return (
     <div>
@@ -35,6 +37,7 @@ const Main = () => {
           <Route path="teacher-courses" element={<TeacherCourses />}></Route>
           <Route path="add-courses" element={<AddCourses />}></Route>
           <Route path="add-chapter/:course_id" element={<AddChapter />}></Route>
+          <Route path="all-chapter/:course_id" element={<AllChapter />}></Route>
         </Route>
         <Route path="/user-dashboard" element={<Dashboard />}>
           <Route path="user-courses" element={<Mycourses />}></Route>

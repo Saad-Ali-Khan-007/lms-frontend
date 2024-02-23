@@ -29,13 +29,17 @@ const TeacherCourses = () => {
     <div className="basis-1/2">
       <div className="bg-white flex justify-between items-center py-8 px-4 shadow sm:rounded-lg sm:px-10 mt-14">
         <div>
+          <h1 className="mb-4 text-xl font-semibold">Course Name</h1>
           {courseData.map((courseList, index) => (
-            <h1 className="mb-4 text-xl font-semibold" key={index}>
-              {courseList.title}
+            <h1 className="mb-[30px]" key={index}>
+              <Link to={`/teacher-dashboard/all-chapter/${courseList.id}`}>
+                {courseList.title}
+              </Link>
             </h1>
           ))}
         </div>
         <div>
+          <h1 className="mb-4 text-xl font-semibold">Course image</h1>
           {courseData.map((courseList, index) => (
             <img
               width="50"
@@ -47,6 +51,7 @@ const TeacherCourses = () => {
           ))}
         </div>
         <div>
+          <h1 className="mb-4 text-xl font-semibold">Chapters</h1>
           {courseData.map((courseList, index) => (
             <Link
               to={`/teacher-dashboard/add-chapter/${courseList.id}`}
