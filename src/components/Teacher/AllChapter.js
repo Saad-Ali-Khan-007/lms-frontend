@@ -22,13 +22,28 @@ const AllChapter = () => {
     }
   };
   const Swal = require("sweetalert2");
-  const handleDelete = () => {
+  const handleDelete = (chapter_id) => {
     Swal.fire({
       title: "Delete!",
       text: "Do you want delete the chapter",
       icon: "error",
       showCancelButton: true,
       confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios.delete(baseUrl + "/chapter/" + chapter_id).then((res) => {
+            window.location.reload();
+            // console.log(res);
+            // setChapterData(res.data);
+          });
+          // Swal.fire("success", "Data has been deleted.");
+        } catch (error) {
+          Swal.fire("error", "Data has not been deleted.!!!");
+        }
+      } else {
+        Swal.fire("error", "Data has not been deleted.!!!");
+      }
     });
   };
 
@@ -66,7 +81,7 @@ const AllChapter = () => {
                     Edit
                   </Link>
                   <button
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(chapterList.id)}
                     className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                   >
                     Delete

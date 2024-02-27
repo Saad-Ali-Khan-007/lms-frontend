@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import Video from "./Video";
+import Swal from "sweetalert2";
 
 const baseurl = "http://localhost:8000/api";
 
@@ -13,6 +13,7 @@ const EditChapter = () => {
     course: "",
     title: "",
     description: "",
+    prev_video: "",
     video: "",
     remarks: "",
   });
@@ -38,7 +39,10 @@ const EditChapter = () => {
     _formData.append("course", chapterData.course);
     _formData.append("title", chapterData.title);
     _formData.append("description", chapterData.description);
-    _formData.append("video", chapterData.video, chapterData.video.name);
+    if (chapterData.video !== "") {
+      _formData.append("video", chapterData.video, chapterData.video.name);
+    }
+
     _formData.append("remarks", chapterData.remarks);
 
     try {
@@ -49,8 +53,17 @@ const EditChapter = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
-          window.location.href = `/teacher-dashboard/all-chapter/${chapterData.id}`;
+          if ((response.status = 200)) {
+            Swal.fire({
+              title: "Data ha been updated",
+              icon: "success",
+              toast: true,
+              timer: 3000,
+              position: "top-right",
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          }
         });
     } catch (error) {
       console.log(error);
@@ -61,7 +74,14 @@ const EditChapter = () => {
   const getData = async () => {
     try {
       const response = await axios.get(`${baseurl}/chapter/${chapter_id}`);
-      setChapterData(response.data);
+      setChapterData({
+        course: response.data.course,
+        title: response.data.title,
+        description: response.data.description,
+        prev_video: response.data.video,
+        remarks: response.data.remarks,
+        video: "",
+      });
     } catch (err) {
       console.log(err);
     }
@@ -126,22 +146,17 @@ const EditChapter = () => {
                 name="video"
                 onChange={handleFileChange}
                 type="file"
+                // value={chapterData.prev_video}
                 required=""
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
-              <video width="100%" height="100%" className="mt-4" controls>
-                <source
-                  value={chapterData.video}
-                  src={chapterData.video}
-                  type="video/mp4"
-                />
-                <source
-                  value={chapterData.video}
-                  src={chapterData.video}
-                  type="video/ogg"
-                />
-                Your browser does not support the video tag.
-              </video>
+              {chapterData.prev_video && (
+                <video width="100%" height="100%" className="mt-4" controls>
+                  <source src={chapterData.prev_video} type="video/mp4" />
+                  <source src={chapterData.prev_video} type="video/ogg" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </div>
           </div>
           <div class="mt-6">
