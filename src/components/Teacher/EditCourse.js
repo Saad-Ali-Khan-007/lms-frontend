@@ -6,48 +6,60 @@ import Swal from "sweetalert2";
 
 const baseurl = "http://localhost:8000/api";
 
-const EditChapter = () => {
-  const { chapter_id } = useParams();
-
-  const [chapterData, setChapterData] = useState({
-    course: "",
+const EditCourse = () => {
+  const [cats, setCats] = useState([]);
+  const [courseData, setCourseData] = useState({
+    course_category: "",
     title: "",
     description: "",
-    prev_video: "",
-    video: "",
-    remarks: "",
+    prev_img: "",
+    featured_img: "",
+    techs: "",
   });
 
+  const getData = () => {
+    try {
+      axios.get(baseurl + "/category/").then((response) => {
+        setCats(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleChange = (e) => {
-    setChapterData({
-      ...chapterData,
+    setCourseData({
+      ...courseData,
       [e.target.name]: e.target.value,
     });
   };
 
-  // console.log(chapterData);
-
   const handleFileChange = (e) => {
-    setChapterData({
-      ...chapterData,
+    setCourseData({
+      ...courseData,
       [e.target.name]: e.target.files[0],
     });
   };
-
+  const teacher_id = localStorage.getItem("teacher_id");
+  const { course_id } = useParams();
   const handleSubmit = (e) => {
     const _formData = new FormData();
-    _formData.append("course", chapterData.course);
-    _formData.append("title", chapterData.title);
-    _formData.append("description", chapterData.description);
-    if (chapterData.video !== "") {
-      _formData.append("video", chapterData.video, chapterData.video.name);
+    _formData.append("course_category", courseData.course_category);
+    _formData.append("teachers_category", teacher_id);
+    _formData.append("title", courseData.title);
+    _formData.append("description", courseData.description);
+    if (courseData.featured_img !== "") {
+      _formData.append(
+        "featured_img",
+        courseData.featured_img,
+        courseData.featured_img.name
+      );
     }
-
-    _formData.append("remarks", chapterData.remarks);
+    _formData.append("techs", courseData.techs);
 
     try {
       axios
-        .put(baseurl + "/chapter/" + chapter_id, _formData, {
+        .put(baseurl + "/teacher-course-detail/" + course_id, _formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -55,7 +67,7 @@ const EditChapter = () => {
         .then((response) => {
           if ((response.status = 200)) {
             Swal.fire({
-              title: "Data has been updated",
+              title: "Data ha been updated",
               icon: "success",
               toast: true,
               timer: 3000,
@@ -71,16 +83,18 @@ const EditChapter = () => {
     e.preventDefault();
   };
 
-  const getData = async () => {
+  const getPrevData = async () => {
     try {
-      const response = await axios.get(`${baseurl}/chapter/${chapter_id}`);
-      setChapterData({
-        course: response.data.course,
+      const response = await axios.get(
+        `${baseurl}/teacher-course-detail/${course_id}`
+      );
+      setCourseData({
+        course_category: response.data.course_category,
         title: response.data.title,
         description: response.data.description,
-        prev_video: response.data.video,
-        remarks: response.data.remarks,
-        video: "",
+        prev_img: response.data.featured_img,
+        techs: response.data.techs,
+        featured_img: "",
       });
     } catch (err) {
       console.log(err);
@@ -88,8 +102,9 @@ const EditChapter = () => {
   };
 
   useEffect(() => {
+    getPrevData();
     getData();
-    document.title = "Add Course";
+    document.title = "Edit Course";
   }, []);
 
   return (
@@ -98,10 +113,32 @@ const EditChapter = () => {
         <form method="POST" action="#">
           <div class="mt-6">
             <label
+              for="category"
+              class="block text-sm font-medium leading-5 text-gray-700"
+            >
+              Category
+            </label>
+            <div class="mt-1 rounded-md shadow-sm">
+              <select
+                name="course_category"
+                onChange={handleChange}
+                // value={courseData.category}
+                class="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+              >
+                {cats.map((cat, index) => (
+                  <option value={cat.id} key={index}>
+                    {cat.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div class="mt-6">
+            <label
               for="title"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Title
+              Course Title
             </label>
             <div class="mt-1 rounded-md shadow-sm">
               <input
@@ -109,8 +146,8 @@ const EditChapter = () => {
                 name="title"
                 onChange={handleChange}
                 type="text"
-                value={chapterData.title}
-                class="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                value={courseData.title}
+                className="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
           </div>
@@ -127,7 +164,8 @@ const EditChapter = () => {
                 name="description"
                 onChange={handleChange}
                 type="text"
-                value={chapterData.description}
+                required=""
+                value={courseData.description}
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -135,44 +173,41 @@ const EditChapter = () => {
 
           <div class="mt-6">
             <label
-              for="video"
+              for="image"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Video
+              Image
             </label>
             <div class="mt-1 rounded-md shadow-sm">
               <input
-                id="video"
-                name="video"
+                id="image"
+                name="featured_img"
                 onChange={handleFileChange}
                 type="file"
+                // value={courseData.featured_img}
                 required=""
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
-              {chapterData.prev_video && (
-                <video width="100%" height="100%" className="mt-4" controls>
-                  <source src={chapterData.prev_video} type="video/mp4" />
-                  <source src={chapterData.prev_video} type="video/ogg" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
             </div>
+            {courseData.prev_img && (
+              <img width="100%" height="100%" src={courseData.prev_img} />
+            )}
           </div>
           <div class="mt-6">
             <label
-              for="remarks"
+              for="technology"
               class="block text-sm font-medium leading-5 text-gray-700"
             >
-              Remarks
+              Technologies
             </label>
             <div class="mt-1 rounded-md shadow-sm">
-              <textarea
-                id="remarks"
-                name="remarks"
+              <input
+                id="technology"
+                name="techs"
                 onChange={handleChange}
                 type="text"
                 required=""
-                value={chapterData.remarks}
+                value={courseData.techs}
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -185,7 +220,7 @@ const EditChapter = () => {
                 onClick={handleSubmit}
                 class="flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
               >
-                Edit Chapter
+                Edit Course
               </button>
             </span>
           </div>
@@ -195,4 +230,4 @@ const EditChapter = () => {
   );
 };
 
-export default EditChapter;
+export default EditCourse;

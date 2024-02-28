@@ -1,7 +1,7 @@
+import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Route, Routes } from "react-router-dom";
 import About from "./About";
 import CourseDetail from "./CourseDetail";
 import React from "react";
@@ -16,6 +16,7 @@ import TeacherLogout from "./Teacher/TeacherLogout";
 import TeacherDashboard from "./Teacher/TeacherDashboard";
 import TeacherCourses from "./Teacher/TeacherCourses";
 import AddCourses from "./Teacher/AddCourses";
+import EditCourse from "./Teacher/EditCourse";
 import AddChapter from "./Teacher/AddChapter";
 import AllChapter from "./Teacher/AllChapter";
 import EditChapter from "./Teacher/EditChapter";
@@ -37,6 +38,7 @@ const Main = () => {
         <Route path="/teacher-dashboard" element={<TeacherDashboard />}>
           <Route path="teacher-courses" element={<TeacherCourses />}></Route>
           <Route path="add-courses" element={<AddCourses />}></Route>
+          <Route path="edit-course/:course_id" element={<EditCourse />}></Route>
           <Route path="add-chapter/:course_id" element={<AddChapter />}></Route>
           <Route
             path="edit-chapter/:chapter_id"
