@@ -67,7 +67,7 @@ const EditCourse = () => {
         .then((response) => {
           if ((response.status = 200)) {
             Swal.fire({
-              title: "Data ha been updated",
+              title: "Data has been updated",
               icon: "success",
               toast: true,
               timer: 3000,

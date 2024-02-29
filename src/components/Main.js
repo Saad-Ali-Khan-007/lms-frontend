@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
+import Courses from "./Courses";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import About from "./About";
@@ -27,6 +28,7 @@ const Main = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/courses" element={<Courses />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/detail/:course_id" element={<CourseDetail />}></Route>
         <Route path="/user-login" element={<Login />}></Route>

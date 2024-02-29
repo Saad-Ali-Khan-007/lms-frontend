@@ -1,41 +1,7 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const trending = [
-  {
-    id: 1,
-    name: "Course Name",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 1,
-    name: "Course Name",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 1,
-    name: "Course Name",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 1,
-    name: "Course Name",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  // More products...
-];
 const popular = [
   {
     id: 1,
@@ -106,11 +72,19 @@ const teacher = [
   },
   // More products...
 ];
-
+const baseurl = "http://localhost:8000/api";
 export default function Home() {
+  const [course, setCourse] = useState([]);
+  const getData = () => {
+    axios.get(baseurl + "/course/?result=4").then((response) => {
+      setCourse(response.data);
+    });
+  };
+
   useEffect(() => {
+    getData();
     document.title = "Home";
-  });
+  }, []);
   return (
     <>
       {/* // Trending Section */}
@@ -121,25 +95,25 @@ export default function Home() {
               Trending Courses
             </h2>
             <h2 className="text-xl font-bold tracking-tight text-gray-900">
-              <a href="#">See All</a>
+              <Link to="/courses">See All</Link>
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {trending.map((product) => (
-              <div key={product.id} className="group relative">
+            {course.map((courses) => (
+              <div key={courses.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
+                    src={courses.featured_img}
+                    alt={courses.title}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to="/detail/1">
+                      <Link to={`/detail/${courses.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {product.name}
+                        {courses.title}
                       </Link>
                     </h3>
                   </div>
