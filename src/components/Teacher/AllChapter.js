@@ -2,12 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Video from "./Video";
+import VideoPopup from "../videoPopup/VideoPopup";
 
 const baseUrl = "http://127.0.0.1:8000/api";
 
 const AllChapter = () => {
   const [chapterData, setChapterData] = useState([]);
+  const [show, setShow] = useState(false);
+  const [videoLink, setVideoLink] = useState(null);
 
   const { course_id } = useParams();
 
@@ -54,44 +56,87 @@ const AllChapter = () => {
   return (
     <div className="basis-1/2">
       <h1 className="text-2xl">All Chapters {chapterData.length}</h1>
-      <div className="bg-white flex justify-between items-center py-8 px-4 shadow sm:rounded-lg sm:px-10 mt-14">
-        <div>
-          <h1 className="mb-4 text-xl font-semibold">Title</h1>
-          {chapterData.map((chapterList, index) => (
-            <h1 key={index}>{chapterList.title}</h1>
-          ))}
-        </div>
-        <div>
-          {chapterData.map((chapterList, index) => (
-            <div className="flex gap-2">
-              <Video key={index} chapterList={chapterList} />
-              <div>
-                <h1 className="mb-4 text-xl font-semibold">Remarks</h1>
-                {chapterData.map((chapterList, index) => (
-                  <p key={index}>{chapterList.remarks}</p>
+
+      <div class="flex mt-12 flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
+                  <tr>
+                    <th scope="col" class="px-6 py-4">
+                      No
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Title
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Watch
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Remarks
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Edit
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Delete
+                    </th>
+                  </tr>
+                </thead>
+                {chapterData.map((chapter) => (
+                  <tbody>
+                    <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
+                      <td class="whitespace-nowrap px-6 py-4 font-medium">
+                        {chapter.id}
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        {chapter.title}
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <button
+                          onClick={() => {
+                            setShow(true);
+                            setVideoLink(chapter.video);
+                          }}
+                          className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                        >
+                          Watch
+                        </button>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        {chapter.remarks}
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <Link
+                          to={`/teacher-dashboard/edit-chapter/${chapter.id}`}
+                          className="mr-4 h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <button
+                          onClick={() => handleDelete(chapter.id)}
+                          className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
                 ))}
-              </div>
-              <div className="flex flex-col">
-                <h1 className="mb-4 text-xl font-semibold">Buttons</h1>
-                <div className="flex">
-                  <Link
-                    to={`/teacher-dashboard/edit-chapter/${chapterList.id}`}
-                    className="mr-4 h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(chapterList.id)}
-                    className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              </table>
             </div>
-          ))}
+          </div>
         </div>
       </div>
+      <VideoPopup
+        show={show}
+        setShow={setShow}
+        videoLink={videoLink}
+        setVideoLink={setVideoLink}
+      />
     </div>
   );
 };

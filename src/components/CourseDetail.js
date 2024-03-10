@@ -1,7 +1,28 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import VideoPopup from "./videoPopup/VideoPopup";
+
+const baseUrl = "http://localhost:8000/api";
 const CourseDetail = () => {
-  let { course_id } = useParams();
+  const { course_id } = useParams();
+  const [course, setCourse] = useState();
+  const [teacher, setTeacher] = useState();
+  const [chapter, setChapter] = useState([]);
+  const [show, setShow] = useState(false);
+  const [videoLink, setVideoLink] = useState(null);
+
+  const getData = async () => {
+    const response = await axios.get(`${baseUrl}/course/${course_id}`);
+    setCourse(response.data);
+    setTeacher(response.data.teachers_category);
+    setChapter(response.data.course_chapters);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <section class="overflow-hidden bg-white py-11 font-poppins dark:bg-gray-800">
       <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
@@ -10,7 +31,7 @@ const CourseDetail = () => {
             <div class="sticky top-0 z-50 overflow-hidden ">
               <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
                 <img
-                  src="https://i.postimg.cc/PqYpFTfy/pexels-melvin-buezo-2529148.jpg"
+                  src={course?.featured_img}
                   alt=""
                   class="object-cover w-full lg:h-full "
                 ></img>
@@ -25,7 +46,7 @@ const CourseDetail = () => {
                   New
                 </span>
                 <h2 class="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
-                  Course Name
+                  {course?.title}
                 </h2>
                 <div class="flex items-center mb-6">
                   <ul class="flex mr-2">
@@ -91,9 +112,7 @@ const CourseDetail = () => {
                   </p>
                 </div>
                 <p class="max-w-md mb-8 text-gray-700 dark:text-gray-400">
-                  Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet
-                  Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet
-                  Lorem ispum dor amet Lorem ispum dor amet
+                  {course?.description}
                 </p>
                 <p class="inline-block mb-8 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
                   <span>$1000.99</span>
@@ -101,7 +120,9 @@ const CourseDetail = () => {
                     $1500.99
                   </span>
                 </p>
-                <p class="text-green-600 dark:text-green-300 ">7 in stock</p>
+                <p class="text-green-600 dark:text-green-300 ">
+                  Course By: {teacher?.full_name}
+                </p>
               </div>
               <div class="flex items-center mb-8">
                 <h2 class="w-16 mr-6 text-xl font-bold dark:text-gray-400">
@@ -172,7 +193,65 @@ const CourseDetail = () => {
             </div>
           </div>
         </div>
+        <div class="flex mt-12 flex-col">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div class="overflow-hidden">
+                <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                  <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
+                    <tr>
+                      <th scope="col" class="px-6 py-4">
+                        No
+                      </th>
+                      <th scope="col" class="px-6 py-4">
+                        Title
+                      </th>
+                      <th scope="col" class="px-6 py-4">
+                        Watch
+                      </th>
+                      <th scope="col" class="px-6 py-4">
+                        Duration
+                      </th>
+                    </tr>
+                  </thead>
+                  {chapter.map((chapter) => (
+                    <tbody>
+                      <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
+                        <td class="whitespace-nowrap px-6 py-4 font-medium">
+                          {chapter.id}
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4">
+                          {chapter.title}
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4">
+                          <button
+                            onClick={() => {
+                              setShow(true);
+                              setVideoLink(chapter.video);
+                            }}
+                            className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                          >
+                            Watch
+                          </button>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4">
+                          1 hour 30 mins
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <VideoPopup
+        show={show}
+        setShow={setShow}
+        videoLink={videoLink}
+        setVideoLink={setVideoLink}
+      />
     </section>
   );
 };

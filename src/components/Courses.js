@@ -25,21 +25,21 @@ export default function Courses() {
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {course.map((courses) => (
-              <div key={courses.id} className="group relative">
+            {course.map((course) => (
+              <div key={course.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    src={courses.featured_img}
-                    alt={courses.title}
+                    src={course.featured_img}
+                    alt={course.title}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to={`/detail/${courses.id}`}>
+                      <Link to={`/detail/${course.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {courses.title}
+                        {course.title}
                       </Link>
                     </h3>
                   </div>
