@@ -14,6 +14,8 @@ const AddCourses = () => {
     techs: "",
   });
 
+  const teacher_id = localStorage.getItem("teacher_id");
+
   const getData = () => {
     try {
       axios.get(baseurl + "/category/").then((response) => {
@@ -31,7 +33,7 @@ const AddCourses = () => {
     });
   };
 
-  // console.log(courseData);
+  console.log(courseData);
 
   const handleFileChange = (e) => {
     setCourseData({
@@ -43,7 +45,7 @@ const AddCourses = () => {
   const handleSubmit = (e) => {
     const _formData = new FormData();
     _formData.append("course_category", courseData.course_category);
-    _formData.append("teachers_category", 1);
+    _formData.append("teachers_category", teacher_id);
     _formData.append("title", courseData.title);
     _formData.append("description", courseData.description);
     _formData.append(
@@ -55,7 +57,7 @@ const AddCourses = () => {
 
     try {
       axios
-        .post(baseurl + "/course/", _formData, {
+        .post(baseurl + "/add-course/", _formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

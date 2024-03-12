@@ -76,7 +76,7 @@ const baseurl = "http://localhost:8000/api";
 export default function Home() {
   const [course, setCourse] = useState([]);
   const getData = () => {
-    axios.get(baseurl + "/course/?result=4").then((response) => {
+    axios.get(baseurl + "/add-course/?result=4").then((response) => {
       setCourse(response.data);
     });
   };

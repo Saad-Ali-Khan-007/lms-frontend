@@ -16,6 +16,7 @@ import Teachers from "./Teachers";
 import TeacherLogout from "./Teacher/TeacherLogout";
 import TeacherDashboard from "./Teacher/TeacherDashboard";
 import TeacherCourses from "./Teacher/TeacherCourses";
+import TeacherDetail from "./TeacherDetail";
 import AddCourses from "./Teacher/AddCourses";
 import EditCourse from "./Teacher/EditCourse";
 import AddChapter from "./Teacher/AddChapter";
@@ -31,6 +32,10 @@ const Main = () => {
         <Route path="/courses" element={<Courses />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/detail/:course_id" element={<CourseDetail />}></Route>
+        <Route
+          path="/teacher-detail/:teacher_id"
+          element={<TeacherDetail />}
+        ></Route>
         <Route path="/user-login" element={<Login />}></Route>
         <Route path="/user-register" element={<Register />}></Route>
         <Route path="/teacher-register" element={<TeacherRegister />}></Route>

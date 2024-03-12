@@ -2,34 +2,25 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import VideoPopup from "./videoPopup/VideoPopup";
+
 import { Link } from "react-router-dom";
 
-const siteUrl = "http://localhost:8000/";
 const baseUrl = "http://localhost:8000/api";
-const CourseDetail = () => {
-  const { course_id } = useParams();
-  const [course, setCourse] = useState();
+const TeacherDetail = () => {
+  const { teacher_id } = useParams();
+  const [course, setCourse] = useState([]);
   const [teacher, setTeacher] = useState();
-  const [chapter, setChapter] = useState([]);
-  const [relatedCourse, setRelatedCourse] = useState([]);
-  const [show, setShow] = useState(false);
-  const [videoLink, setVideoLink] = useState(null);
+
   const getData = async () => {
-    const response = await axios.get(`${baseUrl}/course/${course_id}`);
-    setCourse(response.data);
-    setTeacher(response.data.teachers_category);
-    setChapter(response.data.course_chapters);
-    setRelatedCourse(JSON.parse(response.data.related_courses));
+    const response = await axios.get(`${baseUrl}/teachers/${teacher_id}`);
+    setTeacher(response.data);
+    setCourse(response.data.teacher_courses);
   };
-  console.log(relatedCourse);
 
   useEffect(() => {
     getData();
   }, []);
-  // useEffect(() => {
-  //   getData();
-  // }, [course_id]);
+
   return (
     <section class="overflow-hidden bg-white py-11 font-poppins dark:bg-gray-800">
       <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
@@ -38,7 +29,7 @@ const CourseDetail = () => {
             <div class="sticky top-0 z-50 overflow-hidden ">
               <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
                 <img
-                  src={course?.featured_img}
+                  src={teacher?.featured_img}
                   alt=""
                   class="object-cover w-full lg:h-full "
                 ></img>
@@ -53,7 +44,7 @@ const CourseDetail = () => {
                   New
                 </span>
                 <h2 class="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
-                  {course?.title}
+                  {teacher?.full_name}
                 </h2>
                 <div class="flex items-center mb-6">
                   <ul class="flex mr-2">
@@ -117,76 +108,15 @@ const CourseDetail = () => {
                   <p class="text-xs dark:text-gray-400 ">(Total Enrolled)</p>
                 </div>
                 <p class="max-w-md mb-8 text-gray-700 dark:text-gray-400">
-                  {course?.description}
+                  {teacher?.description}
                 </p>
-                <p class="inline-block mb-8 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                  <span>$1000.99</span>
-                  <span class="text-base font-normal text-gray-500 line-through dark:text-gray-400">
-                    $1500.99
-                  </span>
-                </p>
-                <Link to={`/teacher-detail/${teacher?.id}`}>
-                  <p class="text-green-600 dark:text-green-300 ">
-                    Course By: {teacher?.full_name}
-                  </p>
-                </Link>
               </div>
               <div class="flex  items-center mb-8">
                 <h2 class="w-16 mr-6 text-xl font-bold dark:text-gray-400">
-                  Techs:
+                  Skills:
                 </h2>
                 <div class="flex flex-wrap -mx-2">
-                  <p>{course?.techs}</p>
-                </div>
-              </div>
-              <div class="flex items-center mb-8">
-                <h2 class="w-16 text-xl font-bold dark:text-gray-400">Size:</h2>
-                <div class="flex flex-wrap -mx-2 -mb-2">
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 dark:border-gray-400 hover:text-blue-600 dark:hover:border-gray-300 dark:text-gray-400">
-                    XL
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    S
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    M
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    XS
-                  </button>
-                </div>
-              </div>
-              <div class="w-32 mb-8 ">
-                <label
-                  for=""
-                  class="w-full text-xl font-semibold text-gray-700 dark:text-gray-400"
-                >
-                  Quantity
-                </label>
-                <div class="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
-                  <button class="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
-                    <span class="m-auto text-2xl font-thin">-</span>
-                  </button>
-                  <input
-                    type="number"
-                    class="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
-                    placeholder="1"
-                  ></input>
-                  <button class="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400">
-                    <span class="m-auto text-2xl font-thin">+</span>
-                  </button>
-                </div>
-              </div>
-              <div class="flex flex-wrap items-center -mx-4 ">
-                <div class="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
-                  <button class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                    Add to Cart
-                  </button>
-                </div>
-                <div class="w-full px-4 mb-4 lg:mb-0 lg:w-1/2">
-                  <button class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                    Add to wishlist
-                  </button>
+                  <p>{teacher?.skills}</p>
                 </div>
               </div>
             </div>
@@ -206,32 +136,28 @@ const CourseDetail = () => {
                         Title
                       </th>
                       <th scope="col" class="px-6 py-4">
-                        Watch
+                        View
                       </th>
                       <th scope="col" class="px-6 py-4">
                         Duration
                       </th>
                     </tr>
                   </thead>
-                  {chapter.map((chapter) => (
+                  {course.map((course) => (
                     <tbody>
                       <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
                         <td class="whitespace-nowrap px-6 py-4 font-medium">
-                          {chapter.id}
+                          {course.id}
                         </td>
                         <td class="whitespace-nowrap px-6 py-4">
-                          {chapter.title}
+                          {course.title}
                         </td>
                         <td class="whitespace-nowrap px-6 py-4">
-                          <button
-                            onClick={() => {
-                              setShow(true);
-                              setVideoLink(chapter.video);
-                            }}
-                            className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                          >
-                            Watch
-                          </button>
+                          <Link target="__blank" to={"/detail/" + course.id}>
+                            <button className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                              View
+                            </button>
+                          </Link>
                         </td>
                         <td class="whitespace-nowrap px-6 py-4">
                           1 hour 30 mins
@@ -245,50 +171,8 @@ const CourseDetail = () => {
           </div>
         </div>
       </div>
-      {/* // Trending Section */}
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-2 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-              Trending Courses
-            </h2>
-            <h2 className="text-xl font-bold tracking-tight text-gray-900">
-              <Link to="/courses">See All</Link>
-            </h2>
-          </div>
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {relatedCourse.map((course) => (
-              <div key={course.pk} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <img
-                    src={`${siteUrl}media/${course.fields.featured_img}`}
-                    alt={course.fields.title}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <Link target="__blank" to={`/detail/${course.pk}`}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {course.fields.title}
-                      </Link>
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <VideoPopup
-        show={show}
-        setShow={setShow}
-        videoLink={videoLink}
-        setVideoLink={setVideoLink}
-      />
     </section>
   );
 };
 
-export default CourseDetail;
+export default TeacherDetail;
