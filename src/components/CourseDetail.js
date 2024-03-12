@@ -13,6 +13,7 @@ const CourseDetail = () => {
   const [teacher, setTeacher] = useState();
   const [chapter, setChapter] = useState([]);
   const [relatedCourse, setRelatedCourse] = useState([]);
+  const [techList, setTechList] = useState([]);
   const [show, setShow] = useState(false);
   const [videoLink, setVideoLink] = useState(null);
   const getData = async () => {
@@ -20,6 +21,7 @@ const CourseDetail = () => {
     setCourse(response.data);
     setTeacher(response.data.teachers_category);
     setChapter(response.data.course_chapters);
+    setTechList(response.data.tech_list);
     setRelatedCourse(JSON.parse(response.data.related_courses));
   };
   console.log(relatedCourse);
@@ -136,7 +138,14 @@ const CourseDetail = () => {
                   Techs:
                 </h2>
                 <div class="flex flex-wrap -mx-2">
-                  <p>{course?.techs}</p>
+                  {techList.map((tech) => (
+                    <Link
+                      to={`/category/${tech}`}
+                      className="ml-1 text-green-600"
+                    >
+                      {tech}
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div class="flex items-center mb-8">
@@ -250,7 +259,7 @@ const CourseDetail = () => {
         <div className="mx-auto max-w-2xl px-2 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-              Trending Courses
+              Related Courses
             </h2>
             <h2 className="text-xl font-bold tracking-tight text-gray-900">
               <Link to="/courses">See All</Link>

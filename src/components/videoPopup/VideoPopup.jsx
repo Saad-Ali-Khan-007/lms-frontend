@@ -18,7 +18,7 @@ const VideoPopup = ({ show, setShow, videoLink, setVideoLink }) => {
         </span>
         <ReactPlayer
           url={videoLink ?? ""}
-          controls
+          controls={true}
           width="100%"
           height="100%"
           playing={true}
