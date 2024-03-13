@@ -7,8 +7,7 @@ const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Courses", href: "/courses", current: false },
   { name: "Instructors", href: "/teacher-register", current: false },
-  { name: "User Login", href: "/user-login", current: false },
-  { name: "User Register", href: "/user-register", current: false },
+  { name: "User", href: "/user-register", current: false },
 ];
 
 function classNames(...classes) {
@@ -16,6 +15,8 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
+  const userLoginStatus = localStorage.getItem("userLoginStatus");
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -114,45 +115,65 @@ export default function Navbar() {
                           </a>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/user-dashboard"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            User Dashboard
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/teacher-dashboard/teacher-courses"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Teacher Dashboard
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/teacher-logout"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Logout
-                          </Link>
-                        )}
-                      </Menu.Item>
+                      {teacherLoginStatus == "true" ? (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/teacher-dashboard/teacher-courses"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Teacher Dashboard
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      ) : (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/user-dashboard"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              User Dashboard
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+
+                      {teacherLoginStatus == "true" ? (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/teacher-logout"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Logout
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      ) : (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/user-logout"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Logout
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>

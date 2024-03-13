@@ -7,6 +7,7 @@ import About from "./About";
 import CourseDetail from "./CourseDetail";
 import React from "react";
 import Login from "./User/Login";
+import Logout from "./User/Logout";
 import Register from "./User/Register";
 import Dashboard from "./User/Dashboard";
 import Mycourses from "./User/MyCourses";
@@ -47,6 +48,7 @@ const Main = () => {
           element={<TeacherDetail />}
         ></Route>
         <Route path="/user-login" element={<Login />}></Route>
+        <Route path="/user-logout" element={<Logout />}></Route>
         <Route path="/user-register" element={<Register />}></Route>
         <Route path="/teacher-register" element={<TeacherRegister />}></Route>
         <Route path="/teacher-login" element={<TeacherLogin />}></Route>
