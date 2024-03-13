@@ -10,11 +10,13 @@ const TeacherDetail = () => {
   const { teacher_id } = useParams();
   const [course, setCourse] = useState([]);
   const [teacher, setTeacher] = useState();
+  const [skillList, setSkillList] = useState([]);
 
   const getData = async () => {
     const response = await axios.get(`${baseUrl}/teachers/${teacher_id}`);
     setTeacher(response.data);
     setCourse(response.data.teacher_courses);
+    setSkillList(response.data.skill_list);
   };
 
   useEffect(() => {
@@ -116,7 +118,14 @@ const TeacherDetail = () => {
                   Skills:
                 </h2>
                 <div class="flex flex-wrap -mx-2">
-                  <p>{teacher?.skills}</p>
+                  {skillList.map((skill) => (
+                    <Link
+                      to={`/teacher-skill-course/${skill}/${teacher_id}`}
+                      className="ml-1 text-green-600"
+                    >
+                      {skill}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const baseurl = "http://localhost:8000/api";
 const TeacherLogin = () => {
@@ -104,12 +105,12 @@ const TeacherLogin = () => {
             </div>
             <p class="text-center text-sm text-gray-500">
               Don&#x27;t have an account yet?
-              <a
-                href="#!"
+              <Link
+                to="/teacher-register"
                 class="font-semibold text-gray-600 hover:underline focus:text-gray-800 focus:outline-none"
               >
                 Sign up
-              </a>
+              </Link>
               .
             </p>
           </form>

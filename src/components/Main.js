@@ -23,6 +23,7 @@ import AddChapter from "./Teacher/AddChapter";
 import AllChapter from "./Teacher/AllChapter";
 import EditChapter from "./Teacher/EditChapter";
 import CourseCategory from "./CourseCategory";
+import TeacherSkillCourse from "./TeacherSkillCourse";
 
 const Main = () => {
   return (
@@ -34,6 +35,10 @@ const Main = () => {
         <Route
           path="/category/:category_slug"
           element={<CourseCategory />}
+        ></Route>
+        <Route
+          path="/teacher-skill-course/:skill_name/:teacher_id"
+          element={<TeacherSkillCourse />}
         ></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/detail/:course_id" element={<CourseDetail />}></Route>

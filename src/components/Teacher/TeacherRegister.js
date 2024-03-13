@@ -21,7 +21,7 @@ const TeacherRegister = () => {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     const teacherFormData = new FormData();
     teacherFormData.append("full_name", teacherData.full_name);
     teacherFormData.append("email", teacherData.email);
@@ -47,6 +47,7 @@ const TeacherRegister = () => {
       console.log(error);
       setTeacherData({ status: "error" });
     }
+    e.preventDefault();
   };
 
   const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
