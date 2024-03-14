@@ -23,6 +23,7 @@ import EditCourse from "./Teacher/EditCourse";
 import AddChapter from "./Teacher/AddChapter";
 import AllChapter from "./Teacher/AllChapter";
 import EditChapter from "./Teacher/EditChapter";
+import EnrolledStudents from "./Teacher/EnrolledStudents";
 import CourseCategory from "./CourseCategory";
 import TeacherSkillCourse from "./TeacherSkillCourse";
 
@@ -62,6 +63,10 @@ const Main = () => {
           <Route
             path="edit-chapter/:chapter_id"
             element={<EditChapter />}
+          ></Route>
+          <Route
+            path="enrolled-students/:course_id"
+            element={<EnrolledStudents />}
           ></Route>
           <Route path="all-chapter/:course_id" element={<AllChapter />}></Route>
         </Route>
