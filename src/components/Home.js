@@ -80,7 +80,6 @@ export default function Home() {
       setCourse(response.data);
     });
   };
-  console.log(course);
 
   useEffect(() => {
     getData();

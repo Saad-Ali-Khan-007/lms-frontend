@@ -4,9 +4,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import VideoPopup from "./videoPopup/VideoPopup";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const siteUrl = "http://localhost:8000/";
 const baseUrl = "http://localhost:8000/api";
+
 const CourseDetail = () => {
   const { course_id } = useParams();
   const [course, setCourse] = useState();
@@ -16,6 +18,8 @@ const CourseDetail = () => {
   const [techList, setTechList] = useState([]);
   const [show, setShow] = useState(false);
   const [videoLink, setVideoLink] = useState(null);
+  const [studentLoginStatus, setStudentLoginStatus] = useState();
+  const [enrollStatus, setEnrollStatus] = useState();
   const getData = async () => {
     const response = await axios.get(`${baseUrl}/course/${course_id}`);
     setCourse(response.data);
@@ -24,14 +28,60 @@ const CourseDetail = () => {
     setTechList(response.data.tech_list);
     setRelatedCourse(JSON.parse(response.data.related_courses));
   };
-  console.log(relatedCourse);
+
+  const student_id = localStorage.getItem("user_id");
+
+  const getEnrollStatus = async () => {
+    const response = await axios.get(
+      `${baseUrl}/enroll-status/${student_id}/${course_id}/`
+    );
+    setEnrollStatus(response.data.bool);
+  };
+
+  const enrollCourse = () => {
+    const enrolledCourseForm = new FormData();
+    enrolledCourseForm.append("course", course_id);
+    enrolledCourseForm.append("student", student_id);
+
+    try {
+      axios
+        .post(`${baseUrl}/enroll-course/`, enrolledCourseForm, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "You have successfully enrolled in the course",
+              icon: "success",
+              toast: true,
+              timer: 10000,
+              position: "top-right",
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            setEnrollStatus(true);
+          }
+        });
+    } catch (err) {
+      console.log(console.log(err));
+    }
+  };
 
   useEffect(() => {
     getData();
+    getEnrollStatus();
+    document.title = "Course Detail";
   }, []);
-  // useEffect(() => {
-  //   getData();
-  // }, [course_id]);
+
+  useEffect(() => {
+    const userLoginStatus = localStorage.getItem("userLoginStatus");
+    if (userLoginStatus === "true") {
+      setStudentLoginStatus("success");
+    }
+  }, []);
+
   return (
     <section class="overflow-hidden bg-white py-11 font-poppins dark:bg-gray-800">
       <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
@@ -148,49 +198,30 @@ const CourseDetail = () => {
                   ))}
                 </div>
               </div>
-              <div class="flex items-center mb-8">
-                <h2 class="w-16 text-xl font-bold dark:text-gray-400">Size:</h2>
-                <div class="flex flex-wrap -mx-2 -mb-2">
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 dark:border-gray-400 hover:text-blue-600 dark:hover:border-gray-300 dark:text-gray-400">
-                    XL
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    S
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    M
-                  </button>
-                  <button class="py-1 mb-2 mr-1 border w-11 hover:border-blue-400 hover:text-blue-600 dark:border-gray-400 dark:hover:border-gray-300 dark:text-gray-400">
-                    XS
-                  </button>
-                </div>
-              </div>
-              <div class="w-32 mb-8 ">
-                <label
-                  for=""
-                  class="w-full text-xl font-semibold text-gray-700 dark:text-gray-400"
-                >
-                  Quantity
-                </label>
-                <div class="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
-                  <button class="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
-                    <span class="m-auto text-2xl font-thin">-</span>
-                  </button>
-                  <input
-                    type="number"
-                    class="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
-                    placeholder="1"
-                  ></input>
-                  <button class="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400">
-                    <span class="m-auto text-2xl font-thin">+</span>
-                  </button>
-                </div>
-              </div>
               <div class="flex flex-wrap items-center -mx-4 ">
                 <div class="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
-                  <button class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                    Add to Cart
-                  </button>
+                  {studentLoginStatus === "success" &&
+                    enrollStatus === true && (
+                      <p>You are enrolled in this course</p>
+                    )}
+
+                  {studentLoginStatus === "success" &&
+                    enrollStatus !== true && (
+                      <button
+                        onClick={enrollCourse}
+                        class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                      >
+                        Enroll in Course
+                      </button>
+                    )}
+                  {studentLoginStatus !== "success" && (
+                    <Link
+                      to="/user-login"
+                      class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                    >
+                      Enroll in Course
+                    </Link>
+                  )}
                 </div>
                 <div class="w-full px-4 mb-4 lg:mb-0 lg:w-1/2">
                   <button class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
@@ -204,52 +235,55 @@ const CourseDetail = () => {
         <div class="flex mt-12 flex-col">
           <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              <div class="overflow-hidden">
-                <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
-                  <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
-                    <tr>
-                      <th scope="col" class="px-6 py-4">
-                        No
-                      </th>
-                      <th scope="col" class="px-6 py-4">
-                        Title
-                      </th>
-                      <th scope="col" class="px-6 py-4">
-                        Watch
-                      </th>
-                      <th scope="col" class="px-6 py-4">
-                        Duration
-                      </th>
-                    </tr>
-                  </thead>
-                  {chapter.map((chapter) => (
-                    <tbody>
-                      <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
-                        <td class="whitespace-nowrap px-6 py-4 font-medium">
-                          {chapter.id}
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-4">
-                          {chapter.title}
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-4">
-                          <button
-                            onClick={() => {
-                              setShow(true);
-                              setVideoLink(chapter.video);
-                            }}
-                            className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                          >
-                            Watch
-                          </button>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-4">
-                          1 hour 30 mins
-                        </td>
+              {studentLoginStatus === "success" && enrollStatus === true && (
+                <div class="overflow-hidden">
+                  <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                    <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
+                      <tr>
+                        <th scope="col" class="px-6 py-4">
+                          No
+                        </th>
+                        <th scope="col" class="px-6 py-4">
+                          Title
+                        </th>
+                        <th scope="col" class="px-6 py-4">
+                          Watch
+                        </th>
+                        <th scope="col" class="px-6 py-4">
+                          Duration
+                        </th>
                       </tr>
-                    </tbody>
-                  ))}
-                </table>
-              </div>
+                    </thead>
+
+                    {chapter.map((chapter) => (
+                      <tbody>
+                        <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
+                          <td class="whitespace-nowrap px-6 py-4 font-medium">
+                            {chapter.id}
+                          </td>
+                          <td class="whitespace-nowrap px-6 py-4">
+                            {chapter.title}
+                          </td>
+                          <td class="whitespace-nowrap px-6 py-4">
+                            <button
+                              onClick={() => {
+                                setShow(true);
+                                setVideoLink(chapter.video);
+                              }}
+                              className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                            >
+                              Watch
+                            </button>
+                          </td>
+                          <td class="whitespace-nowrap px-6 py-4">
+                            1 hour 30 mins
+                          </td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         </div>

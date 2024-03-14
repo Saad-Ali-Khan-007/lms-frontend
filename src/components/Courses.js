@@ -11,7 +11,7 @@ export default function Courses() {
     });
   };
   useEffect(() => {
-    document.title = "courses";
+    document.title = "Courses";
     getData();
   }, []);
   return (
