@@ -166,7 +166,9 @@ const CourseDetail = () => {
                       </a>
                     </li>
                   </ul>
-                  <p class="text-xs dark:text-gray-400 ">(Total Enrolled)</p>
+                  <p class="text-xs dark:text-gray-400 ">
+                    (Total Enrolled: {course?.total_enrolled_students})
+                  </p>
                 </div>
                 <p class="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                   {course?.description}
