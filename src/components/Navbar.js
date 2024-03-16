@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 const navigation = [
-  { name: "Learning Management System", href: "#", current: true },
+  { name: "Learning", href: "#", current: true },
   { name: "Home", href: "/", current: false },
   { name: "Courses", href: "/courses", current: false },
   { name: "Instructors", href: "/teacher-register", current: false },

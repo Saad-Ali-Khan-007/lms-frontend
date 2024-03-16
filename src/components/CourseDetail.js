@@ -21,19 +21,8 @@ const CourseDetail = () => {
   const [videoLink, setVideoLink] = useState(null);
   const [studentLoginStatus, setStudentLoginStatus] = useState();
   const [enrollStatus, setEnrollStatus] = useState();
-  const [ratingData, setRatingData] = useState({
-    rating: "",
-    reviews: "",
-  });
+  const [avgRating, setAvgRating] = useState(0);
 
-  const handleChange = (event) => {
-    {
-      setRatingData({
-        ...ratingData,
-        [event.target.name]: event.target.value,
-      });
-    }
-  };
   const location = useLocation();
 
   const CourseDetail = location.state;
@@ -44,6 +33,7 @@ const CourseDetail = () => {
     setTeacher(response.data.teachers_category);
     setChapter(response.data.course_chapters);
     setTechList(response.data.tech_list);
+    setAvgRating(response.data.average_course_rating);
     setRelatedCourse(JSON.parse(response.data.related_courses));
   };
 
@@ -126,8 +116,12 @@ const CourseDetail = () => {
                   {course?.title}
                 </h2>
                 <div className="flex items-center mb-6">
-                  <RatingModal CourseDetail={CourseDetail} />
-                  <p className="text-xs dark:text-gray-400 ">
+                  <RatingModal
+                    enrollStatus={enrollStatus}
+                    CourseDetail={CourseDetail}
+                    studentLoginStatus={studentLoginStatus}
+                  />
+                  <p className="ml-4 text-xs dark:text-gray-400 ">
                     (Total Enrolled: {course?.total_enrolled_students})
                   </p>
                 </div>
@@ -135,10 +129,7 @@ const CourseDetail = () => {
                   {course?.description}
                 </p>
                 <p className="inline-block mb-8 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                  <span>$1000.99</span>
-                  <span className="text-base font-normal text-gray-500 line-through dark:text-gray-400">
-                    $1500.99
-                  </span>
+                  <span>{avgRating}/5</span>
                 </p>
                 <Link to={`/teacher-detail/${teacher?.id}`}>
                   <p className="text-green-600 dark:text-green-300 ">
@@ -150,7 +141,7 @@ const CourseDetail = () => {
                 <h2 className="w-16 mr-6 text-xl font-bold dark:text-gray-400">
                   Techs:
                 </h2>
-                <div className="flex flex-wrap -mx-2">
+                <div className="flex flex-wrap -mx-4">
                   {techList.map((tech) => (
                     <Link
                       to={`/category/${tech}`}

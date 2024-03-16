@@ -50,6 +50,9 @@ const TeacherCourses = () => {
               <th scope="col" class="px-6 py-4">
                 Duration
               </th>
+              <th scope="col" class="px-6 py-4">
+                Rating
+              </th>
             </tr>
           </thead>
 
@@ -80,7 +83,7 @@ const TeacherCourses = () => {
                       className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                       key={index}
                     >
-                      Add course
+                      Add Chapter
                     </button>
                   </Link>
                 </td>
@@ -95,6 +98,9 @@ const TeacherCourses = () => {
                   </Link>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">1 hour 30 mins</td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  {courseData.average_course_rating}/5
+                </td>
               </tr>
             </tbody>
           ))}
