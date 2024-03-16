@@ -27,6 +27,7 @@ import EnrolledStudents from "./Teacher/EnrolledStudents";
 import CourseCategory from "./CourseCategory";
 import TeacherSkillCourse from "./TeacherSkillCourse";
 import AllStudent from "./Teacher/AllStudent";
+import TeacherProfile from "./Teacher/TeacherProfile";
 
 const Main = () => {
   return (
@@ -61,6 +62,10 @@ const Main = () => {
           <Route path="add-courses" element={<AddCourses />}></Route>
           <Route path="edit-course/:course_id" element={<EditCourse />}></Route>
           <Route path="add-chapter/:course_id" element={<AddChapter />}></Route>
+          <Route
+            path="edit-teacher-profile"
+            element={<TeacherProfile />}
+          ></Route>
           <Route
             path="edit-chapter/:chapter_id"
             element={<EditChapter />}

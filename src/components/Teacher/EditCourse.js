@@ -101,6 +101,8 @@ const EditCourse = () => {
     }
   };
 
+  console.log(courseData.featured_img);
+
   useEffect(() => {
     getPrevData();
     getData();

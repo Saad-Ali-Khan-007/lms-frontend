@@ -31,7 +31,7 @@ const TeacherDetail = () => {
             <div class="sticky top-0 z-50 overflow-hidden ">
               <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
                 <img
-                  src={teacher?.featured_img}
+                  src={teacher?.profile_img}
                   alt=""
                   class="object-cover w-full lg:h-full "
                 ></img>
