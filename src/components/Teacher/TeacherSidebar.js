@@ -29,12 +29,12 @@ const Sidebar = () => {
 
           <div>
             <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-              <a
-                href="javascript:;"
+              <Link
+                to="/teacher-dashboard/all-students"
                 class="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
               >
-                Settings
-              </a>
+                All Students
+              </Link>
             </span>
           </div>
 
