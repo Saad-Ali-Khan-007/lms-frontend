@@ -19,7 +19,30 @@ const TeacherCourses = () => {
       console.log(err);
     }
   };
-  console.log(courseData);
+  const Swal = require("sweetalert2");
+  const handleDelete = (course_id) => {
+    Swal.fire({
+      title: "Delete!",
+      text: "Do you want delete the course",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios
+            .delete(baseUrl + "/teacher-course-detail/" + course_id)
+            .then((res) => {
+              window.location.reload();
+            });
+        } catch (error) {
+          Swal.fire("error", "Data has not been deleted.!!!");
+        }
+      } else {
+        Swal.fire("error", "Data has not been deleted.!!!");
+      }
+    });
+  };
 
   useEffect(() => {
     document.title = "Teacher Courses";
@@ -92,14 +115,13 @@ const TeacherCourses = () => {
                   </Link>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
-                  <Link to={`/teacher-dashboard/add-chapter/${courseData.id}`}>
-                    <button
-                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-indigo active:bg-orange-700 transition duration-150 ease-in-out"
-                      key={index}
-                    >
-                      Delete Course
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() => handleDelete(courseData.id)}
+                    className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-indigo active:bg-orange-700 transition duration-150 ease-in-out"
+                    key={index}
+                  >
+                    Delete Course
+                  </button>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">1 hour 30 mins</td>
                 <td class="whitespace-nowrap px-6 py-4">
