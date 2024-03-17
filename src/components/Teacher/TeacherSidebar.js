@@ -1,10 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const Sidebar = () => {
+  const Swal = require("sweetalert2");
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Logout!",
+      text: "Do you want to logout",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonText: "Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          window.location.href = "/teacher-logout";
+        } catch (error) {
+          Swal.fire("error", "Something went wrong.!!!");
+        }
+      } else {
+        Swal.fire("error", "Something went wrong.!!!");
+      }
+    });
+  };
+
   return (
     <>
       <div>
         <div className="mt-14">
+          <div>
+            <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
+              <a
+                href="javascript:;"
+                class="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
+              >
+                Dashboard
+              </a>
+            </span>
+          </div>
           <div>
             <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
               <Link
@@ -51,34 +83,23 @@ const Sidebar = () => {
 
           <div>
             <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-              <a
-                href="javascript:;"
+              <Link
+                to="/teacher-dashboard/forgot-password"
                 class="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
               >
-                Orders
-              </a>
+                Forgot Password
+              </Link>
             </span>
           </div>
 
           <div>
             <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-              <a
-                href="javascript:;"
+              <button
+                onClick={() => handleDelete()}
                 class="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
               >
-                Track Order
-              </a>
-            </span>
-          </div>
-
-          <div>
-            <span class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-              <a
-                href="javascript:;"
-                class="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
-              >
-                Products
-              </a>
+                Logout
+              </button>
             </span>
           </div>
         </div>

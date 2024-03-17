@@ -10,7 +10,7 @@ const TeacherProfile = () => {
     full_name: "",
     description: "",
     email: "",
-    password: "",
+
     prev_img: "",
     profile_img: "",
     phone_no: "",
@@ -40,7 +40,7 @@ const TeacherProfile = () => {
     teacherFormData.append("description", teacherData.description);
 
     teacherFormData.append("email", teacherData.email);
-    teacherFormData.append("password", teacherData.password);
+
     if (teacherData.profile_img !== "") {
       teacherFormData.append(
         "profile_img",
@@ -86,7 +86,7 @@ const TeacherProfile = () => {
         full_name: response.data.full_name,
         description: response.data.description,
         email: response.data.email,
-        password: response.data.password,
+
         phone_no: response.data.phone_no,
         qualification: response.data.qualification,
         skills: response.data.skills,
@@ -97,6 +97,10 @@ const TeacherProfile = () => {
       console.log(err);
     }
   };
+  const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
+  if (teacherLoginStatus != "true") {
+    window.location.href = "/teacher-login";
+  }
 
   useEffect(() => {
     getData();
@@ -157,28 +161,9 @@ const TeacherProfile = () => {
                 id="email"
                 name="email"
                 onChange={handleChange}
-                type="text"
+                type="email"
                 required=""
                 value={teacherData.email}
-                className="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-              />
-            </div>
-          </div>
-          <div className="mt-6">
-            <label
-              for="password"
-              className="block text-sm font-medium leading-5 text-gray-700"
-            >
-              Password
-            </label>
-            <div className="mt-1 rounded-md shadow-sm">
-              <input
-                id="password"
-                name="password"
-                onChange={handleChange}
-                type="password"
-                required=""
-                value={teacherData.password}
                 className="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
