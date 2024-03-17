@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className="flex justify-evenly mt-4">
       <Sidebar />
 
       <Outlet />

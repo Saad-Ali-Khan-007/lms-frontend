@@ -30,7 +30,7 @@ const DashboardAnalytics = () => {
   }, []);
   return (
     <div className="basis-1/2">
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <div className=" py-8 px-4 sm:rounded-lg sm:px-10 flex flex-col justify-center bg-white shadow-xl rounded-xl">
           <div className="">
             <img

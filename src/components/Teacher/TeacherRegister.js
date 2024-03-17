@@ -59,8 +59,8 @@ const TeacherRegister = () => {
     document.title = "Teacher Registration";
   });
   return (
-    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {teacherData.status === "success" && (
           <p className="text-center text-green-500">
             User Successfuly Registered
@@ -70,35 +70,35 @@ const TeacherRegister = () => {
           <p className="text-center text-red-500">Something went Wrong</p>
         )}
         <img
-          class="mx-auto h-10 w-auto"
+          className="mx-auto h-10 w-auto"
           src="https://www.svgrepo.com/show/301692/login.svg"
           alt="Workflow"
         />
-        <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
           Create a new account
         </h2>
-        <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+        <p className="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
           Or
           <Link
             to="/teacher-login"
-            class="font-medium ml-3 text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+            className="font-medium ml-3 text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
             login to your account
           </Link>
         </p>
       </div>
 
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form method="POST" action="#">
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="name"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Name
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="name"
                   name="full_name"
@@ -106,18 +106,18 @@ const TeacherRegister = () => {
                   type="text"
                   required=""
                   value={teacherData.full_name}
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="email"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Email
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="email"
                   name="email"
@@ -125,19 +125,19 @@ const TeacherRegister = () => {
                   type="email"
                   required=""
                   value={teacherData.email}
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
 
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="password"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Password
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="password"
                   name="password"
@@ -145,18 +145,18 @@ const TeacherRegister = () => {
                   type="password"
                   value={teacherData.password}
                   required=""
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="phone"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Cell No
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="phone"
                   name="phone_no"
@@ -164,18 +164,18 @@ const TeacherRegister = () => {
                   type="text"
                   required=""
                   value={teacherData.phone_no}
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="qualification"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Qualification
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="qualification"
                   name="qualification"
@@ -183,18 +183,18 @@ const TeacherRegister = () => {
                   type="text"
                   value={teacherData.qualification}
                   required=""
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
-            <div class="mt-6">
+            <div className="mt-6">
               <label
                 for="skills"
-                class="block text-sm font-medium leading-5 text-gray-700"
+                className="block text-sm font-medium leading-5 text-gray-700"
               >
                 Skills
               </label>
-              <div class="mt-1 rounded-md shadow-sm">
+              <div className="mt-1 rounded-md shadow-sm">
                 <input
                   id="skills"
                   name="skills"
@@ -202,16 +202,16 @@ const TeacherRegister = () => {
                   type="text"
                   value={teacherData.skills}
                   required=""
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                 />
               </div>
             </div>
-            <div class="mt-6">
-              <span class="block w-full rounded-md shadow-sm">
+            <div className="mt-6">
+              <span className="block w-full rounded-md shadow-sm">
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                 >
                   Create account
                 </button>
