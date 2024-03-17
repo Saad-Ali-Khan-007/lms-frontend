@@ -59,7 +59,11 @@ const TeacherCourses = () => {
           {courseData.map((courseData, index) => (
             <tbody>
               <tr class="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
-                <td class="whitespace-nowrap px-6 py-4">{courseData.title}</td>
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                  <Link to={`/teacher-dashboard/all-chapter/${courseData.id}`}>
+                    {courseData.title}
+                  </Link>
+                </td>
                 <td class="whitespace-nowrap px-6 py-4 font-medium">
                   <Link
                     to={`/teacher-dashboard/enrolled-students/${courseData.id}`}

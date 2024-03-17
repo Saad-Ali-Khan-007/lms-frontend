@@ -52,8 +52,6 @@ const TeacherProfile = () => {
     teacherFormData.append("qualification", teacherData.qualification);
     teacherFormData.append("skills", teacherData.skills);
 
-    console.log(teacherData.profile_img);
-
     try {
       axios
         .put(baseurl + "/teachers/" + teacher_id + "/", teacherFormData, {
