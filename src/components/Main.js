@@ -32,6 +32,7 @@ import ForgotPassword from "./Teacher/ForgotPassword";
 import DashboardAnalytics from "./Teacher/DashboardAnalytics";
 import RecommendedCourses from "./User/RecommendedCourses";
 import FavouriteCourse from "./User/FavouriteCourse";
+import AddAssignment from "./Teacher/AddAssignment";
 
 const Main = () => {
   return (
@@ -70,6 +71,10 @@ const Main = () => {
           ></Route>
           <Route path="edit-course/:course_id" element={<EditCourse />}></Route>
           <Route path="add-chapter/:course_id" element={<AddChapter />}></Route>
+          <Route
+            path="add-assignment/:student_id/:teacher_id"
+            element={<AddAssignment />}
+          ></Route>
           <Route path="forgot-password" element={<ForgotPassword />}></Route>
           <Route
             path="edit-teacher-profile"

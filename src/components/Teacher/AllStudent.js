@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 const baseUrl = "http://localhost:8000/api";
 
@@ -8,7 +9,6 @@ const AllStudent = () => {
   const [studentData, setStudentData] = useState([]);
 
   const teacher_id = localStorage.getItem("teacher_id");
-  console.log(studentData);
 
   const getData = async () => {
     try {
@@ -20,7 +20,6 @@ const AllStudent = () => {
       console.log(err);
     }
   };
-  console.log(studentData);
 
   useEffect(() => {
     document.title = "Teacher Students";
@@ -43,7 +42,7 @@ const AllStudent = () => {
                 Course
               </th>
               <th scope="col" className="px-6 py-4">
-                Interest
+                Assignments
               </th>
             </tr>
           </thead>
@@ -61,8 +60,25 @@ const AllStudent = () => {
                   {student.course?.title}
                 </td>
 
-                <td className="whitespace-nowrap px-6 py-4 font-medium">
-                  {student.student?.interested_categories}
+                <td className="flex whitespace-nowrap px-6 py-4 font-medium">
+                  <Link to="">
+                    <button
+                      className="mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-yellow-700 transition duration-150 ease-in-out"
+                      key={index}
+                    >
+                      Assignment
+                    </button>
+                  </Link>
+                  <Link
+                    to={`/teacher-dashboard/add-assignment/${student.student?.id}/${teacher_id}`}
+                  >
+                    <button
+                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out"
+                      key={index}
+                    >
+                      Add Assignment
+                    </button>
+                  </Link>
                 </td>
               </tr>
             </tbody>
