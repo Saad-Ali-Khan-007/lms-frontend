@@ -30,6 +30,8 @@ import AllStudent from "./Teacher/AllStudent";
 import TeacherProfile from "./Teacher/TeacherProfile";
 import ForgotPassword from "./Teacher/ForgotPassword";
 import DashboardAnalytics from "./Teacher/DashboardAnalytics";
+import RecommendedCourses from "./User/RecommendedCourses";
+import FavouriteCourse from "./User/FavouriteCourse";
 
 const Main = () => {
   return (
@@ -86,6 +88,11 @@ const Main = () => {
         </Route>
         <Route path="/user-dashboard" element={<Dashboard />}>
           <Route path="user-courses" element={<Mycourses />}></Route>
+          <Route
+            path="recommended-courses"
+            element={<RecommendedCourses />}
+          ></Route>
+          <Route path="favourite-courses" element={<FavouriteCourse />}></Route>
         </Route>
       </Routes>
       <Footer />

@@ -22,6 +22,7 @@ const CourseDetail = () => {
   const [studentLoginStatus, setStudentLoginStatus] = useState();
   const [enrollStatus, setEnrollStatus] = useState();
   const [avgRating, setAvgRating] = useState(0);
+  const [favouriteStatus, setFavouriteStatus] = useState();
 
   const location = useLocation();
 
@@ -77,9 +78,86 @@ const CourseDetail = () => {
     }
   };
 
+  const getFavouriteStatus = async () => {
+    const response = await axios.get(
+      `${baseUrl}/student-favourite-course-status/${student_id}/${course_id}/`
+    );
+    if (response.data.bool == true) {
+      setFavouriteStatus("success");
+    } else {
+      setFavouriteStatus("");
+    }
+  };
+
+  const addToFavourites = () => {
+    const _formData = new FormData();
+    _formData.append("course", course_id);
+    _formData.append("student", student_id);
+    _formData.append("status", true);
+    try {
+      axios
+        .post(`${baseUrl}/student-favourite-course/`, _formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "You have added the course to favourites",
+              icon: "success",
+              toast: true,
+              timer: 10000,
+              position: "top-right",
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            setFavouriteStatus("success");
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const removeFavourite = () => {
+    const _formData = new FormData();
+    _formData.append("course", course_id);
+    _formData.append("student", student_id);
+    _formData.append("status", false);
+    try {
+      axios
+        .get(
+          `${baseUrl}/student-remove-favourite-course/${student_id}/${course_id}`,
+          _formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "You have remove course from the favourites",
+              icon: "success",
+              toast: true,
+              timer: 10000,
+              position: "top-right",
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            setFavouriteStatus("");
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getData();
     getEnrollStatus();
+    getFavouriteStatus();
     document.title = "Course Detail";
   }, []);
 
@@ -178,9 +256,26 @@ const CourseDetail = () => {
                   )}
                 </div>
                 <div className="w-full px-4 mb-4 lg:mb-0 lg:w-1/2">
-                  <button className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                    Add to wishlist
-                  </button>
+                  {studentLoginStatus === "success" &&
+                    favouriteStatus !== "success" && (
+                      <button
+                        onClick={addToFavourites}
+                        title="Favourites"
+                        className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                      >
+                        Add to Favourites
+                      </button>
+                    )}
+                  {studentLoginStatus === "success" &&
+                    favouriteStatus === "success" && (
+                      <button
+                        onClick={removeFavourite}
+                        title="Remove Favourites"
+                        className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                      >
+                        Remove From Favourites
+                      </button>
+                    )}
                 </div>
               </div>
             </div>

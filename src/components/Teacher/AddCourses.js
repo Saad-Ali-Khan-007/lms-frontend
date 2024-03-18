@@ -33,8 +33,6 @@ const AddCourses = () => {
     });
   };
 
-  console.log(courseData);
-
   const handleFileChange = (e) => {
     setCourseData({
       ...courseData,
