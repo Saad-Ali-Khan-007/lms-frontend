@@ -44,6 +44,9 @@ const StudentAssignment = () => {
                     <th scope="col" className="px-6 py-4">
                       Description
                     </th>
+                    <th scope="col" className="px-6 py-4">
+                      Completion Status
+                    </th>
                   </tr>
                 </thead>
                 {assignmentData.map((assignment) => (
@@ -56,6 +59,15 @@ const StudentAssignment = () => {
                       <td className=" flex flex-wrap  px-6 py-4">
                         {assignment.description}
                       </td>
+                      {assignment.student_status == true ? (
+                        <td className="text-green-500 font-bold whitespace-nowrap px-6 py-4">
+                          Completed
+                        </td>
+                      ) : (
+                        <td className=" text-yellow-600 font-bold whitespace-nowrap px-6 py-4">
+                          Pending
+                        </td>
+                      )}
                     </tr>
                   </tbody>
                 ))}

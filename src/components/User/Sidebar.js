@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const student_id = localStorage.getItem("user_id");
   const Swal = require("sweetalert2");
   const handleDelete = () => {
     Swal.fire({
@@ -48,6 +49,16 @@ const Sidebar = () => {
             </span>
           </div>
 
+          <div>
+            <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
+              <Link
+                to={`/user-dashboard/teacher-assignment/${student_id}`}
+                className="flex items-center  text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
+              >
+                Assignment
+              </Link>
+            </span>
+          </div>
           <div>
             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
               <Link

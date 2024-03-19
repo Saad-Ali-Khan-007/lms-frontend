@@ -34,6 +34,7 @@ import RecommendedCourses from "./User/RecommendedCourses";
 import FavouriteCourse from "./User/FavouriteCourse";
 import AddAssignment from "./Teacher/AddAssignment";
 import StudentAssignment from "./Teacher/StudentAssignment";
+import TeacherAssignment from "./User/TeacherAssignment";
 
 const Main = () => {
   return (
@@ -103,6 +104,10 @@ const Main = () => {
             element={<RecommendedCourses />}
           ></Route>
           <Route path="favourite-courses" element={<FavouriteCourse />}></Route>
+          <Route
+            path="teacher-assignment/:student_id"
+            element={<TeacherAssignment />}
+          ></Route>
         </Route>
       </Routes>
       <Footer />
