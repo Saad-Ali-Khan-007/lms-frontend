@@ -33,6 +33,7 @@ import DashboardAnalytics from "./Teacher/DashboardAnalytics";
 import RecommendedCourses from "./User/RecommendedCourses";
 import FavouriteCourse from "./User/FavouriteCourse";
 import AddAssignment from "./Teacher/AddAssignment";
+import StudentAssignment from "./Teacher/StudentAssignment";
 
 const Main = () => {
   return (
@@ -74,6 +75,10 @@ const Main = () => {
           <Route
             path="add-assignment/:student_id/:teacher_id"
             element={<AddAssignment />}
+          ></Route>
+          <Route
+            path="view-assignment/:student_id/:teacher_id"
+            element={<StudentAssignment />}
           ></Route>
           <Route path="forgot-password" element={<ForgotPassword />}></Route>
           <Route

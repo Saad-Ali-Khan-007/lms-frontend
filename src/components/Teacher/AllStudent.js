@@ -61,7 +61,9 @@ const AllStudent = () => {
                 </td>
 
                 <td className="flex whitespace-nowrap px-6 py-4 font-medium">
-                  <Link to="">
+                  <Link
+                    to={`/teacher-dashboard/view-assignment/${student.student?.id}/${teacher_id}`}
+                  >
                     <button
                       className="mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-yellow-700 transition duration-150 ease-in-out"
                       key={index}
