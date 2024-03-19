@@ -35,6 +35,7 @@ import FavouriteCourse from "./User/FavouriteCourse";
 import AddAssignment from "./Teacher/AddAssignment";
 import StudentAssignment from "./Teacher/StudentAssignment";
 import TeacherAssignment from "./User/TeacherAssignment";
+import StudentDashboardAnalytics from "./User/StudentDashboardAnalytics";
 
 const Main = () => {
   return (
@@ -98,6 +99,10 @@ const Main = () => {
           <Route path="all-chapter/:course_id" element={<AllChapter />}></Route>
         </Route>
         <Route path="/user-dashboard" element={<Dashboard />}>
+          <Route
+            path="dashboard-analytics"
+            element={<StudentDashboardAnalytics />}
+          ></Route>
           <Route path="user-courses" element={<Mycourses />}></Route>
           <Route
             path="recommended-courses"
