@@ -36,6 +36,7 @@ import AddAssignment from "./Teacher/AddAssignment";
 import StudentAssignment from "./Teacher/StudentAssignment";
 import TeacherAssignment from "./User/TeacherAssignment";
 import StudentDashboardAnalytics from "./User/StudentDashboardAnalytics";
+import UserProfile from "./User/UserProfile";
 
 const Main = () => {
   return (
@@ -113,6 +114,7 @@ const Main = () => {
             path="teacher-assignment/:student_id"
             element={<TeacherAssignment />}
           ></Route>
+          <Route path="edit-user-profile" element={<UserProfile />}></Route>
         </Route>
       </Routes>
       <Footer />
