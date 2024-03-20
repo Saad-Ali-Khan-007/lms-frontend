@@ -26,7 +26,7 @@ const StudentDashboardAnalytics = () => {
   console.log(dashboard);
   useEffect(() => {
     getData();
-    document.title = "Teacher Dashboard";
+    document.title = "Student Dashboard";
   }, []);
   return (
     <div className="basis-1/2">

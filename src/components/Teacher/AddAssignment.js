@@ -43,6 +43,23 @@ const AddAssignment = () => {
         .then((response) => {
           window.location.href = `/teacher-dashboard/add-assignment/${student_id}/${teacher_id}/`;
         });
+
+      const notifData = new FormData();
+      notifData.append("teacher", teacher_id);
+      notifData.append("student", student_id);
+
+      notifData.append("notification_subject", "assignment");
+      notifData.append("notification_for", "student");
+      notifData.append("description", assignment.description);
+      axios
+        .post(`${baseurl}/student/notification/${student_id}/`, notifData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log("Notification Added");
+        });
     } catch (error) {
       console.log(error);
     }
