@@ -61,6 +61,9 @@ const Quiz = () => {
                 Quiz
               </th>
               <th scope="col" className="px-6 py-4">
+                Question
+              </th>
+              <th scope="col" className="px-6 py-4">
                 Delete
               </th>
             </tr>
@@ -70,7 +73,11 @@ const Quiz = () => {
             <tbody>
               <tr className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
                 <td className="whitespace-nowrap px-6 py-4 font-medium">
-                  {quiz.title}
+                  <Link
+                    to={`/teacher-dashboard/quiz-question-detail/${quiz.id}`}
+                  >
+                    {quiz.title}
+                  </Link>
                 </td>
 
                 <td className="whitespace-nowrap px-6 py-4">
@@ -80,6 +87,16 @@ const Quiz = () => {
                       key={index}
                     >
                       Edit Quiz
+                    </button>
+                  </Link>
+                </td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  <Link to={`/teacher-dashboard/quiz-question/${quiz.id}`}>
+                    <button
+                      className="mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                      key={index}
+                    >
+                      Add Question
                     </button>
                   </Link>
                 </td>

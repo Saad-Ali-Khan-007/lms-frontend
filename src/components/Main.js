@@ -41,6 +41,9 @@ import UserForgotPassword from "./User/UserForgotPassword";
 import AddQuiz from "./Teacher/AddQuiz";
 import Quiz from "./Teacher/Quiz";
 import EditQuiz from "./Teacher/EditQuiz";
+import AddQuizQuestion from "./Teacher/AddQuizQuestion";
+import CourseQuizQuestion from "./Teacher/CourseQuizQuestion";
+import EditQuizQuestion from "./Teacher/EditQuizQuestion";
 
 const Main = () => {
   return (
@@ -87,6 +90,18 @@ const Main = () => {
           <Route path="quiz" element={<Quiz />}></Route>
           <Route path="edit-quiz/:quiz_id" element={<EditQuiz />}></Route>
           <Route
+            path="quiz-question/:quiz_id"
+            element={<AddQuizQuestion />}
+          ></Route>
+          <Route
+            path="quiz-question-detail/:quiz_id"
+            element={<CourseQuizQuestion />}
+          ></Route>
+          <Route
+            path="edit-question/:question_id"
+            element={<EditQuizQuestion />}
+          ></Route>
+          <Route
             path="view-assignment/:student_id/:teacher_id"
             element={<StudentAssignment />}
           ></Route>
@@ -121,6 +136,7 @@ const Main = () => {
             path="teacher-assignment/:student_id"
             element={<TeacherAssignment />}
           ></Route>
+
           <Route path="edit-user-profile" element={<UserProfile />}></Route>
           <Route
             path="forgot-password"

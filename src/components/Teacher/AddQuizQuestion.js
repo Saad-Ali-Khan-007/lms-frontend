@@ -2,66 +2,45 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-
 const baseurl = "http://localhost:8000/api";
 
-const EditChapter = () => {
-  const { chapter_id } = useParams();
-
-  const [chapterData, setChapterData] = useState({
-    course: "",
-    title: "",
-    description: "",
-    prev_video: "",
-    video: "",
-    remarks: "",
+const AddQuizQuestion = () => {
+  const { quiz_id } = useParams();
+  const [quizQuestion, setQuizQuestion] = useState({
+    question: "",
+    ans1: "",
+    ans2: "",
+    ans3: "",
+    ans4: "",
+    right_ans: "",
   });
 
   const handleChange = (e) => {
-    setChapterData({
-      ...chapterData,
+    setQuizQuestion({
+      ...quizQuestion,
       [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setChapterData({
-      ...chapterData,
-      [e.target.name]: e.target.files[0],
     });
   };
 
   const handleSubmit = (e) => {
     const _formData = new FormData();
-    _formData.append("course", chapterData.course);
-    _formData.append("title", chapterData.title);
-    _formData.append("description", chapterData.description);
-    if (chapterData.video !== "") {
-      _formData.append("video", chapterData.video, chapterData.video.name);
-    }
-
-    _formData.append("remarks", chapterData.remarks);
+    _formData.append("quiz", quiz_id);
+    _formData.append("question", quizQuestion.question);
+    _formData.append("ans1", quizQuestion.ans1);
+    _formData.append("ans2", quizQuestion.ans2);
+    _formData.append("ans3", quizQuestion.ans3);
+    _formData.append("ans4", quizQuestion.ans4);
+    _formData.append("right_ans", quizQuestion.right_ans);
 
     try {
       axios
-        .put(baseurl + "/chapter/" + chapter_id, _formData, {
+        .post(baseurl + "/quiz-question/", _formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
-          if ((response.status = 200)) {
-            Swal.fire({
-              title: "Data has been updated",
-              icon: "success",
-              toast: true,
-              timer: 3000,
-              position: "top-right",
-              timerProgressBar: true,
-              showConfirmButton: false,
-            });
-          }
+          window.location.href = `/teacher-dashboard/quiz-question/${quiz_id}`;
         });
     } catch (error) {
       console.log(error);
@@ -69,25 +48,8 @@ const EditChapter = () => {
     e.preventDefault();
   };
 
-  const getData = async () => {
-    try {
-      const response = await axios.get(`${baseurl}/chapter/${chapter_id}`);
-      setChapterData({
-        course: response.data.course,
-        title: response.data.title,
-        description: response.data.description,
-        prev_video: response.data.video,
-        remarks: response.data.remarks,
-        video: "",
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
-    getData();
-    document.title = "Add Course";
+    document.title = "Add Quiz Question";
   }, []);
 
   return (
@@ -96,81 +58,114 @@ const EditChapter = () => {
         <form method="POST" action="#">
           <div className="mt-6">
             <label
-              for="title"
+              for="question"
               className="block text-sm font-medium leading-5 text-gray-700"
             >
-              Title
+              Question
             </label>
             <div className="mt-1 rounded-md shadow-sm">
               <input
-                id="title"
-                name="title"
+                id="question"
+                name="question"
                 onChange={handleChange}
                 type="text"
-                value={chapterData.title}
+                required=""
+                value={quizQuestion.question}
                 className="appearance-none w-full block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
           </div>
           <div className="mt-6">
             <label
-              for="description"
+              for="ans1"
               className="block text-sm font-medium leading-5 text-gray-700"
             >
-              Description
+              Answer 1
             </label>
             <div className="mt-1 rounded-md shadow-sm">
               <textarea
-                id="description"
-                name="description"
+                id="ans1"
+                name="ans1"
                 onChange={handleChange}
                 type="text"
-                value={chapterData.description}
+                required=""
+                value={quizQuestion.ans1}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
           </div>
-
           <div className="mt-6">
             <label
-              for="video"
+              for="ans2"
               className="block text-sm font-medium leading-5 text-gray-700"
             >
-              Video
+              Answer 2
             </label>
             <div className="mt-1 rounded-md shadow-sm">
-              <input
-                id="video"
-                name="video"
-                onChange={handleFileChange}
-                type="file"
+              <textarea
+                id="ans2"
+                name="ans2"
+                onChange={handleChange}
+                type="text"
                 required=""
+                value={quizQuestion.ans2}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
-              {chapterData.prev_video && (
-                <video width="100%" height="100%" className="mt-4" controls>
-                  <source src={chapterData.prev_video} type="video/mp4" />
-                  <source src={chapterData.prev_video} type="video/ogg" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
             </div>
           </div>
           <div className="mt-6">
             <label
-              for="remarks"
+              for="ans3"
               className="block text-sm font-medium leading-5 text-gray-700"
             >
-              Remarks
+              Answer 3
             </label>
             <div className="mt-1 rounded-md shadow-sm">
               <textarea
-                id="remarks"
-                name="remarks"
+                id="ans3"
+                name="ans3"
                 onChange={handleChange}
                 type="text"
                 required=""
-                value={chapterData.remarks}
+                value={quizQuestion.ans3}
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <label
+              for="ans4"
+              className="block text-sm font-medium leading-5 text-gray-700"
+            >
+              Answer 4
+            </label>
+            <div className="mt-1 rounded-md shadow-sm">
+              <textarea
+                id="ans4"
+                name="ans4"
+                onChange={handleChange}
+                type="text"
+                required=""
+                value={quizQuestion.ans4}
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <label
+              for="right_ans"
+              className="block text-sm font-medium leading-5 text-gray-700"
+            >
+              Right Answer
+            </label>
+            <div className="mt-1 rounded-md shadow-sm">
+              <textarea
+                id="right_ans"
+                name="right_ans"
+                onChange={handleChange}
+                type="text"
+                required=""
+                value={quizQuestion.right_ans}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
               />
             </div>
@@ -183,7 +178,7 @@ const EditChapter = () => {
                 onClick={handleSubmit}
                 className="flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
               >
-                Edit Chapter
+                Add Question
               </button>
             </span>
           </div>
@@ -193,4 +188,4 @@ const EditChapter = () => {
   );
 };
 
-export default EditChapter;
+export default AddQuizQuestion;
