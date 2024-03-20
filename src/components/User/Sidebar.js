@@ -37,7 +37,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getData();
-  }, [notification]);
+  }, []);
 
   return (
     <>

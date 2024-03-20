@@ -38,6 +38,9 @@ import TeacherAssignment from "./User/TeacherAssignment";
 import StudentDashboardAnalytics from "./User/StudentDashboardAnalytics";
 import UserProfile from "./User/UserProfile";
 import UserForgotPassword from "./User/UserForgotPassword";
+import AddQuiz from "./Teacher/AddQuiz";
+import Quiz from "./Teacher/Quiz";
+import EditQuiz from "./Teacher/EditQuiz";
 
 const Main = () => {
   return (
@@ -80,6 +83,9 @@ const Main = () => {
             path="add-assignment/:student_id/:teacher_id"
             element={<AddAssignment />}
           ></Route>
+          <Route path="add-quiz" element={<AddQuiz />}></Route>
+          <Route path="quiz" element={<Quiz />}></Route>
+          <Route path="edit-quiz/:quiz_id" element={<EditQuiz />}></Route>
           <Route
             path="view-assignment/:student_id/:teacher_id"
             element={<StudentAssignment />}

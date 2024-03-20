@@ -58,6 +58,26 @@ const Sidebar = () => {
               </Link>
             </span>
           </div>
+          <div>
+            <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
+              <Link
+                to="/teacher-dashboard/add-quiz"
+                className="flex items-center  text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
+              >
+                Add Quiz
+              </Link>
+            </span>
+          </div>
+          <div>
+            <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
+              <Link
+                to="/teacher-dashboard/quiz"
+                className="flex items-center  text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark"
+              >
+                Quiz
+              </Link>
+            </span>
+          </div>
 
           <div>
             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
