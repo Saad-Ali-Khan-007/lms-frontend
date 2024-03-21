@@ -44,6 +44,7 @@ import EditQuiz from "./Teacher/EditQuiz";
 import AddQuizQuestion from "./Teacher/AddQuizQuestion";
 import CourseQuizQuestion from "./Teacher/CourseQuizQuestion";
 import EditQuizQuestion from "./Teacher/EditQuizQuestion";
+import AssignQuiz from "./Teacher/AssignQuiz";
 
 const Main = () => {
   return (
@@ -101,6 +102,7 @@ const Main = () => {
             path="edit-question/:question_id"
             element={<EditQuizQuestion />}
           ></Route>
+          <Route path="assign-quiz/:course_id" element={<AssignQuiz />}></Route>
           <Route
             path="view-assignment/:student_id/:teacher_id"
             element={<StudentAssignment />}
