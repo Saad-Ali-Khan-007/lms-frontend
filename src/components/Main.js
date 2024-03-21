@@ -45,6 +45,8 @@ import AddQuizQuestion from "./Teacher/AddQuizQuestion";
 import CourseQuizQuestion from "./Teacher/CourseQuizQuestion";
 import EditQuizQuestion from "./Teacher/EditQuizQuestion";
 import AssignQuiz from "./Teacher/AssignQuiz";
+import AllQuiz from "./User/AllQuiz";
+import QuizQuestion from "./User/QuizQuestion";
 
 const Main = () => {
   return (
@@ -129,6 +131,11 @@ const Main = () => {
             element={<StudentDashboardAnalytics />}
           ></Route>
           <Route path="user-courses" element={<Mycourses />}></Route>
+          <Route path="course-quiz/:course_id" element={<AllQuiz />}></Route>
+          <Route
+            path="quiz-question/:quiz_id"
+            element={<QuizQuestion />}
+          ></Route>
           <Route
             path="recommended-courses"
             element={<RecommendedCourses />}

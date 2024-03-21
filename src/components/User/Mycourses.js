@@ -41,7 +41,7 @@ const MyCourses = () => {
                 View Chapters
               </th>
               <th scope="col" className="px-6 py-4">
-                Unenrolled
+                Quiz
               </th>
 
               <th scope="col" className="px-6 py-4">
@@ -74,12 +74,16 @@ const MyCourses = () => {
                   </Link>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  <button
-                    className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-indigo active:bg-orange-700 transition duration-150 ease-in-out"
-                    key={index}
+                  <Link
+                    to={`/user-dashboard/course-quiz/${studentData.course?.id}`}
                   >
-                    Unenrolled
-                  </button>
+                    <button
+                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out"
+                      key={index}
+                    >
+                      Quiz
+                    </button>
+                  </Link>
                 </td>
 
                 <td className="whitespace-nowrap px-6 py-4">1 hour 30 mins</td>
