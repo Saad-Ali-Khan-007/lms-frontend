@@ -50,6 +50,7 @@ import AllQuiz from "./User/AllQuiz";
 import QuizQuestion from "./User/QuizQuestion";
 import StudyMaterial from "./Teacher/StudyMaterial";
 import AddMaterial from "./Teacher/AddMaterial";
+import StudentStudyMaterial from "./User/StudentStudyMaterial";
 
 const Main = () => {
   return (
@@ -156,6 +157,10 @@ const Main = () => {
           <Route
             path="teacher-assignment/:student_id"
             element={<TeacherAssignment />}
+          ></Route>
+          <Route
+            path="student-study-material/:course_id"
+            element={<StudentStudyMaterial />}
           ></Route>
 
           <Route path="edit-user-profile" element={<UserProfile />}></Route>
