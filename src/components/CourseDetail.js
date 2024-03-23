@@ -28,15 +28,27 @@ const CourseDetail = () => {
 
   const CourseDetail = location.state;
 
+  const getChapterData = async () => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/course-chapters/${course_id}`
+      );
+      setChapter(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getData = async () => {
     const response = await axios.get(`${baseUrl}/course/${course_id}`);
     setCourse(response.data);
     setTeacher(response.data.teachers_category);
-    setChapter(response.data.course_chapters);
+
     setTechList(response.data.tech_list);
     setAvgRating(response.data.average_course_rating);
     setRelatedCourse(JSON.parse(response.data.related_courses));
   };
+  console.log(course);
 
   const student_id = localStorage.getItem("user_id");
 
@@ -153,11 +165,12 @@ const CourseDetail = () => {
       console.log(err);
     }
   };
-
+  console.log(chapter);
   useEffect(() => {
     getData();
     getEnrollStatus();
     getFavouriteStatus();
+    getChapterData();
     document.title = "Course Detail";
   }, []);
 
@@ -325,7 +338,7 @@ const CourseDetail = () => {
                             </button>
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">
-                            1 hour 30 mins
+                            {chapter.chapter_duration}
                           </td>
                         </tr>
                       </tbody>

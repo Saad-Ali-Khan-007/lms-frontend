@@ -6,39 +6,39 @@ import VideoPopup from "../videoPopup/VideoPopup";
 
 const baseUrl = "http://127.0.0.1:8000/api";
 
-const AllChapter = () => {
-  const [chapterData, setChapterData] = useState([]);
-  const [show, setShow] = useState(false);
-  const [videoLink, setVideoLink] = useState(null);
+const StudyMaterial = () => {
+  const [materialData, setMaterialData] = useState([]);
 
   const { course_id } = useParams();
 
   const getData = async () => {
     try {
       const response = await axios.get(
-        `${baseUrl}/course-chapters/${course_id}`
+        `${baseUrl}/study-material/${course_id}`
       );
-      setChapterData(response.data);
+      setMaterialData(response.data);
     } catch (err) {
       console.log(err);
     }
   };
   const Swal = require("sweetalert2");
-  const handleDelete = (chapter_id) => {
+  const handleDelete = (material_id) => {
     Swal.fire({
       title: "Delete!",
-      text: "Do you want delete the chapter",
+      text: "Do you want delete the material",
       icon: "error",
       showCancelButton: true,
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          axios.delete(baseUrl + "/chapter/" + chapter_id).then((res) => {
-            window.location.reload();
-            // console.log(res);
-            // setChapterData(res.data);
-          });
+          axios
+            .delete(baseUrl + "/study-material-detail/" + material_id)
+            .then((res) => {
+              window.location.reload();
+              // console.log(res);
+              // setChapterData(res.data);
+            });
           // Swal.fire("success", "Data has been deleted.");
         } catch (error) {
           Swal.fire("error", "Data has not been deleted.!!!");
@@ -48,15 +48,23 @@ const AllChapter = () => {
       }
     });
   };
-  console.log(chapterData);
+  console.log(materialData);
 
   useEffect(() => {
-    document.title = "Chapters";
+    document.title = "Study Material";
     getData();
   }, []);
   return (
     <div className="basis-1/2">
-      <h1 className="text-2xl">All Chapters {chapterData.length}</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl">All Material {materialData.length}</h1>
+        <Link
+          to={`/teacher-dashboard/add-study-material/${course_id}`}
+          className=" flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+        >
+          Add Material
+        </Link>
+      </div>
 
       <div className="flex mt-12 flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -72,64 +80,40 @@ const AllChapter = () => {
                       Title
                     </th>
                     <th scope="col" className="px-6 py-4">
-                      Watch
+                      View
                     </th>
-                    <th scope="col" className="px-6 py-4">
-                      Remarks
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Edit
-                    </th>
+
                     <th scope="col" className="px-6 py-4">
                       Delete
                     </th>
-                    <th scope="col" className="px-6 py-4">
-                      Duration
-                    </th>
                   </tr>
                 </thead>
-                {chapterData.map((chapter) => (
+                {materialData.map((material) => (
                   <tbody>
                     <tr className="border-b border-neutral-200 transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-white/10 dark:hover:bg-neutral-600">
                       <td className="whitespace-nowrap px-6 py-4 font-medium">
-                        {chapter.id}
+                        {material.id}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        {chapter.title}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <button
-                          onClick={() => {
-                            setShow(true);
-                            setVideoLink(chapter.video);
-                          }}
-                          className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                        >
-                          Watch
-                        </button>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {chapter.remarks}
+                        {material.title}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <Link
-                          to={`/teacher-dashboard/edit-chapter/${chapter.id}`}
-                          className="mr-4 h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                          target="__blank"
+                          className="h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
+                          to={material.study_material}
                         >
-                          Edit
+                          View
                         </Link>
                       </td>
+
                       <td className="whitespace-nowrap px-6 py-4">
                         <button
-                          onClick={() => handleDelete(chapter.id)}
+                          onClick={() => handleDelete(material.id)}
                           className="  h-[42px] w-[72px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                         >
                           Delete
                         </button>
-                      </td>
-
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {chapter.chapter_duration}
                       </td>
                     </tr>
                   </tbody>
@@ -139,13 +123,7 @@ const AllChapter = () => {
           </div>
         </div>
       </div>
-      <VideoPopup
-        show={show}
-        setShow={setShow}
-        videoLink={videoLink}
-        setVideoLink={setVideoLink}
-      />
     </div>
   );
 };
-export default AllChapter;
+export default StudyMaterial;

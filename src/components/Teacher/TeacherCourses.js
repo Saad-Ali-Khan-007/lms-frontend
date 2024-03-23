@@ -68,14 +68,15 @@ const TeacherCourses = () => {
                 Add Chapter
               </th>
               <th scope="col" className="px-6 py-4">
+                Add Study Material
+              </th>
+              <th scope="col" className="px-6 py-4">
                 Assign Quiz
               </th>
               <th scope="col" className="px-6 py-4">
                 Delete Course
               </th>
-              <th scope="col" className="px-6 py-4">
-                Duration
-              </th>
+
               <th scope="col" className="px-6 py-4">
                 Rating
               </th>
@@ -110,7 +111,7 @@ const TeacherCourses = () => {
                 <td className="whitespace-nowrap px-6 py-4">
                   <Link to={`/teacher-dashboard/add-chapter/${courseData.id}`}>
                     <button
-                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out"
+                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-indigo active:bg-orange-700 transition duration-150 ease-in-out"
                       key={index}
                     >
                       Add Chapter
@@ -118,9 +119,21 @@ const TeacherCourses = () => {
                   </Link>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  <Link to={`/teacher-dashboard/assign-quiz/${courseData.id}`}>
+                  <Link
+                    to={`/teacher-dashboard/study-material/${courseData.id}`}
+                  >
                     <button
                       className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out"
+                      key={index}
+                    >
+                      Study Material
+                    </button>
+                  </Link>
+                </td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  <Link to={`/teacher-dashboard/assign-quiz/${courseData.id}`}>
+                    <button
+                      className="ml-4 mb-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-500 focus:outline-none focus:border-blue-500 focus:shadow-outline-indigo active:bg-blue-700 transition duration-150 ease-in-out"
                       key={index}
                     >
                       Assign
@@ -136,7 +149,6 @@ const TeacherCourses = () => {
                     Delete Course
                   </button>
                 </td>
-                <td className="whitespace-nowrap px-6 py-4">1 hour 30 mins</td>
                 <td className="whitespace-nowrap px-6 py-4">
                   {courseData.average_course_rating}/5
                 </td>

@@ -48,6 +48,8 @@ import EditQuizQuestion from "./Teacher/EditQuizQuestion";
 import AssignQuiz from "./Teacher/AssignQuiz";
 import AllQuiz from "./User/AllQuiz";
 import QuizQuestion from "./User/QuizQuestion";
+import StudyMaterial from "./Teacher/StudyMaterial";
+import AddMaterial from "./Teacher/AddMaterial";
 
 const Main = () => {
   return (
@@ -126,6 +128,14 @@ const Main = () => {
           ></Route>
           <Route path="all-students" element={<AllStudent />}></Route>
           <Route path="all-chapter/:course_id" element={<AllChapter />}></Route>
+          <Route
+            path="study-material/:course_id"
+            element={<StudyMaterial />}
+          ></Route>
+          <Route
+            path="add-study-material/:course_id"
+            element={<AddMaterial />}
+          ></Route>
         </Route>
         <Route path="/user-dashboard" element={<Dashboard />}>
           <Route
