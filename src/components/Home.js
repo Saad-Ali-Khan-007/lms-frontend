@@ -75,14 +75,30 @@ const teacher = [
 const baseurl = "http://localhost:8000/api";
 export default function Home() {
   const [course, setCourse] = useState([]);
+  const [popularCourse, setPopularCourse] = useState([]);
+  const [courseData, setCourseData] = useState([]);
   const getData = () => {
     axios.get(baseurl + "/course/?result=4").then((response) => {
       setCourse(response.data);
     });
   };
+  const getCourseData = () => {
+    axios.get(baseurl + "/course/").then((response) => {
+      setCourseData(response.data);
+    });
+  };
+
+  const getPopularCourses = () => {
+    axios.get(baseurl + "/popular-courses/?popular=1").then((response) => {
+      setPopularCourse(response.data);
+    });
+  };
+  console.log(popularCourse);
 
   useEffect(() => {
     getData();
+    getPopularCourses();
+    getCourseData();
     document.title = "Home";
   }, []);
   return (
@@ -131,31 +147,40 @@ export default function Home() {
               Popular Courses
             </h2>
             <h2 className="text-xl font-bold tracking-tight text-gray-900">
-              <a href="#">See All</a>
+              <Link to="/popular-courses">See All</Link>
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {popular.map((product) => (
-              <div key={product.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <a href={product.href}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.name}
-                      </a>
-                    </h3>
+            {popularCourse.map((course) => {
+              const popular = courseData.find(
+                (popularcourse) => popularcourse.id === course.id
+              );
+
+              return (
+                <div key={course.id} className="group relative">
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                    <img
+                      src={popular?.featured_img}
+                      alt={popular?.title}
+                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div>
+                      <h3 className="text-sm text-gray-700">
+                        <Link to={`/detail/${popular?.id}`}>
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0"
+                          />
+                          {popular?.title}
+                        </Link>
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

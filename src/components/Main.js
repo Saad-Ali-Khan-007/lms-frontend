@@ -51,6 +51,7 @@ import QuizQuestion from "./User/QuizQuestion";
 import StudyMaterial from "./Teacher/StudyMaterial";
 import AddMaterial from "./Teacher/AddMaterial";
 import StudentStudyMaterial from "./User/StudentStudyMaterial";
+import PopularCourses from "./PopularCourses";
 
 const Main = () => {
   return (
@@ -64,6 +65,7 @@ const Main = () => {
           path="/category/:category_slug"
           element={<CourseCategory />}
         ></Route>
+        <Route path="/popular-courses" element={<PopularCourses />}></Route>
         <Route
           path="/teacher-skill-course/:skill_name/:teacher_id"
           element={<TeacherSkillCourse />}
