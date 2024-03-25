@@ -23,6 +23,7 @@ const CourseDetail = () => {
   const [enrollStatus, setEnrollStatus] = useState();
   const [avgRating, setAvgRating] = useState(0);
   const [favouriteStatus, setFavouriteStatus] = useState();
+  const [courseViews, setCourseViews] = useState(0);
 
   const location = useLocation();
 
@@ -57,6 +58,11 @@ const CourseDetail = () => {
       `${baseUrl}/enroll-status/${student_id}/${course_id}/`
     );
     setEnrollStatus(response.data.bool);
+  };
+
+  const getViews = async () => {
+    const response = await axios.get(`${baseUrl}/course-views/${course_id}`);
+    setCourseViews(response.data.views);
   };
 
   const enrollCourse = () => {
@@ -165,9 +171,10 @@ const CourseDetail = () => {
       console.log(err);
     }
   };
-  console.log(chapter);
+
   useEffect(() => {
     getData();
+    getViews();
     getEnrollStatus();
     getFavouriteStatus();
     getChapterData();
@@ -200,9 +207,6 @@ const CourseDetail = () => {
           <div className="w-full px-4 md:w-1/2 ">
             <div className="lg:pl-20">
               <div className="mb-8 ">
-                <span className="text-lg font-medium text-rose-500 dark:text-rose-200">
-                  New
-                </span>
                 <h2 className="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
                   {course?.title}
                 </h2>
@@ -216,6 +220,9 @@ const CourseDetail = () => {
                     (Total Enrolled: {course?.total_enrolled_students})
                   </p>
                 </div>
+                <span className="text-lg font-medium text-rose-500 dark:text-rose-200">
+                  Views : {courseViews}
+                </span>
                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                   {course?.description}
                 </p>
