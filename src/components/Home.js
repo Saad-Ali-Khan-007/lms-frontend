@@ -76,6 +76,7 @@ const baseurl = "http://localhost:8000/api";
 export default function Home() {
   const [course, setCourse] = useState([]);
   const [popularCourse, setPopularCourse] = useState([]);
+  const [popularTeachers, setPopularTeachers] = useState([]);
   const [courseData, setCourseData] = useState([]);
   const getData = () => {
     axios.get(baseurl + "/course/?result=4").then((response) => {
@@ -93,9 +94,15 @@ export default function Home() {
       setPopularCourse(response.data);
     });
   };
-  console.log(popularCourse);
+  const getPopularTeachers = () => {
+    axios.get(baseurl + "/popular-teachers/?popular=1").then((response) => {
+      setPopularTeachers(response.data);
+    });
+  };
+  console.log(popularTeachers);
 
   useEffect(() => {
+    getPopularTeachers();
     getData();
     getPopularCourses();
     getCourseData();
@@ -196,22 +203,22 @@ export default function Home() {
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {teacher.map((product) => (
-              <div key={product.id} className="group relative">
+            {popularTeachers.map((popular) => (
+              <div key={popular.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
+                    src={popular?.profile_img}
+                    alt={popular?.full_name}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <a href={product.href}>
+                      <Link to={`/detail/${popular?.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {product.name}
-                      </a>
+                        {popular?.full_name}
+                      </Link>
                     </h3>
                   </div>
                 </div>
