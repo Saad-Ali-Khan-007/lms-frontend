@@ -78,6 +78,7 @@ export default function Home() {
   const [popularCourse, setPopularCourse] = useState([]);
   const [popularTeachers, setPopularTeachers] = useState([]);
   const [courseData, setCourseData] = useState([]);
+  const [studentReviews, setStudentReviews] = useState([]);
   const getData = () => {
     axios.get(baseurl + "/course/?result=4").then((response) => {
       setCourse(response.data);
@@ -99,9 +100,16 @@ export default function Home() {
       setPopularTeachers(response.data);
     });
   };
-  console.log(popularTeachers);
 
+  const getStudentReviews = () => {
+    axios.get(baseurl + "/student-reviews/").then((response) => {
+      setStudentReviews(response.data);
+    });
+  };
+
+  console.log(studentReviews);
   useEffect(() => {
+    getStudentReviews();
     getPopularTeachers();
     getData();
     getPopularCourses();
@@ -215,7 +223,7 @@ export default function Home() {
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to={`/detail/${popular?.id}`}>
+                      <Link to={`/teacher-detail/${popular?.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
                         {popular?.full_name}
                       </Link>
@@ -228,110 +236,25 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex mx-auto my-10 max-w-6xl justify-between items-center">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-          Reviews
-        </h2>
-        <h2 className="text-xl font-bold tracking-tight text-gray-900">
-          <Link to="/teachers">See All</Link>
-        </h2>
-      </div>
       <div className="mx-auto my-10 max-w-6xl grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2 bg-white dark:bg-gray-800">
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Very easy this was to integrate
-            </h3>
-            <p className="my-4">
-              If you care for your time, I hands down would go with this."
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center ">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
-              alt="profile picture"
-            ></img>
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-              <div>Bonnie Green</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 ">
-                Developer at Open AI
+        {studentReviews.map((review) => (
+          <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
+            <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {review.rating}/5
+              </h3>
+              <p className="my-4">{review.reviews}</p>
+            </blockquote>
+            <figcaption className="flex items-center justify-center ">
+              <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
+                <div className="text-center">{review.student?.full_name}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 ">
+                  Course: {review.course.title}
+                </div>
               </div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Solid foundation for any project
-            </h3>
-            <p className="my-4">
-              Designing with Figma components that can be easily translated to
-              the utility classes of Tailwind CSS is a huge timesaver!"
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center ">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
-              alt="profile picture"
-            ></img>
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-              <div>Roberta Casas</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                Lead designer at Dropbox
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 md:rounded-es-lg md:border-b-0 md:border-e dark:bg-gray-800 dark:border-gray-700">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Mindblowing workflow
-            </h3>
-            <p className="my-4">
-              Aesthetically, the well designed components are beautiful and will
-              undoubtedly level up your next application."
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center ">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-              alt="profile picture"
-            ></img>
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-              <div>Jese Leos</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                Software Engineer at Facebook
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-gray-200 rounded-b-lg md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Efficient Collaborating
-            </h3>
-            <p className="my-4">
-              You have many examples that can be used to create a fast prototype
-              for your team."
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center ">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
-              alt="profile picture"
-            ></img>
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-              <div>Joseph McFall</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                CTO at Google
-              </div>
-            </div>
-          </figcaption>
-        </figure>
+            </figcaption>
+          </figure>
+        ))}
       </div>
     </>
   );
