@@ -1,6 +1,8 @@
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { CgShoppingCart } from "react-icons/cg";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const navigation = [
   { name: "Learning", href: "#", current: true },
@@ -18,6 +20,7 @@ export default function Navbar() {
   const [search, setSearch] = useState({
     search: "",
   });
+  const { amount } = useSelector((store) => store.cart);
   const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
   const userLoginStatus = localStorage.getItem("userLoginStatus");
 
@@ -102,14 +105,19 @@ export default function Navbar() {
                 </button>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                <Link to="/cart">
+                  <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Add to Cart</span>
+                    <CgShoppingCart className="h-6 w-6" aria-hidden="true" />
+                    <div className="absolute top-[-0.6rem] right[-0.6rem] width-[1rem] height-[1rem] flex items-center justify-center">
+                      <p className="text-white mb-0 text-xl">{amount}</p>
+                    </div>
+                  </button>
+                </Link>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

@@ -52,12 +52,14 @@ import StudyMaterial from "./Teacher/StudyMaterial";
 import AddMaterial from "./Teacher/AddMaterial";
 import StudentStudyMaterial from "./User/StudentStudyMaterial";
 import PopularCourses from "./PopularCourses";
+import CartContainer from "./AddToCart/CartContainer";
 
 const Main = () => {
   return (
     <div>
       <Navbar />
       <Routes>
+        <Route path="/cart" element={<CartContainer />}></Route>
         <Route path="/" element={<Home />}></Route>
         <Route path="/courses" element={<Courses />}></Route>
         <Route path="/search/:search" element={<Search />}></Route>
