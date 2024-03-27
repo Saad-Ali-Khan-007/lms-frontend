@@ -6,11 +6,14 @@ import VideoPopup from "./videoPopup/VideoPopup";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import RatingModal from "./RatingModal";
+import { addToCart } from "../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 const siteUrl = "http://localhost:8000/";
 const baseUrl = "http://localhost:8000/api";
 
 const CourseDetail = () => {
+  const dispatch = useDispatch();
   const { course_id } = useParams();
   const [course, setCourse] = useState();
   const [teacher, setTeacher] = useState();
@@ -226,6 +229,12 @@ const CourseDetail = () => {
                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                   {course?.description}
                 </p>
+                <button
+                  onClick={() => dispatch(addToCart(course))}
+                  className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                >
+                  Add to Cart
+                </button>
                 <p className="inline-block mb-8 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
                   <span>{avgRating}/5</span>
                 </p>

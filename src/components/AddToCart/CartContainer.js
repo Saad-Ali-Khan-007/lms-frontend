@@ -82,7 +82,7 @@ export default function Example() {
                                 <li key={product.id} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
-                                      src={product.imageSrc}
+                                      src={product.featured_img}
                                       alt={product.imageAlt}
                                       className="h-full w-full object-cover object-center"
                                     />
@@ -93,20 +93,13 @@ export default function Example() {
                                       <div className="flex justify-between text-base font-medium text-gray-900">
                                         <h3>
                                           <a href={product.href}>
-                                            {product.name}
+                                            {product.title}
                                           </a>
                                         </h3>
                                         <p className="ml-4">{product.price}</p>
                                       </div>
-                                      <p className="mt-1 text-sm text-gray-500">
-                                        {product.color}
-                                      </p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
-                                      <p className="text-gray-500">
-                                        Qty {product.quantity}
-                                      </p>
-
                                       <div className="flex">
                                         <button
                                           type="button"
@@ -130,7 +123,7 @@ export default function Example() {
                       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <p>Subtotal</p>
-                          <p>${total.toFixed(2)}</p>
+                          <p>${total}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">
                           Shipping and taxes calculated at checkout.

@@ -31,7 +31,7 @@ const initialState = {
     },
     // More products...
   ],
-  amount: 4,
+  amount: 0,
   total: 0,
   isLoading: true,
 };
@@ -59,9 +59,23 @@ const cartSlice = createSlice({
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
     },
+    addToCart: (state, action) => {
+      state.cartItems.push(action.payload);
+    },
+    calculateTotals: (state) => {
+      let amount = 0;
+      let total = 0;
+      state.cartItems.forEach((item) => {
+        amount += item.amount;
+        total += item.price;
+      });
+      state.amount = amount;
+      state.total = total;
+    },
   },
 });
 
-export const { clearCart, removeItem } = cartSlice.actions;
+export const { clearCart, removeItem, addToCart, calculateTotals } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
