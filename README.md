@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# Full-Stack LMS (Learning Management System)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![alt text](<FireShot Capture 001 - Home - localhost.png>)
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project is a full-stack Learning Management System (LMS) inspired by platforms like Udemy. It provides a comprehensive solution for managing courses, instructors, students, and various learning materials.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User Authentication**: Secure user authentication system allowing students, instructors, and admins to log in and access their respective dashboards.
+- **Course Management**: Create, update, and delete courses with ease. Instructors can manage their courses, add lectures, quizzes, assignments, etc.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Enrollment System**: Students can enroll in courses and track their progress. Instructors can manage enrollments and monitor student activity.
 
-### `npm test`
+- **Interactive Learning Experience**: Rich media support for course content including videos, documents, quizzes, and assignments.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Admin Dashboard**: Admins have access to a powerful dashboard for managing users, courses, and system settings.
 
-### `npm run build`
+- **Search and Filter**: Efficient search and filter functionality to help users find courses based on their interests.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend**: [React](https://reactjs.org/), [Redux](https://redux.js.org/), [tailwindcss](https://tailwindcss.com/)
+- **Backend**: [Django](https://www.djangoproject.com/), [Django REST Framework](https://www.django-rest-framework.org/), [SQL](Database)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Backend
 
-### `npm run eject`
+https://github.com/Saad-Ali-Khan-007/lms-backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Setup Instructions
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone the repository:
+2. Navigate to the project directory:
+3. Install dependencies for both frontend and backend:
+   cd client
+   npm install
+   cd ../server
+   pip install -r requirements.txt
+4. Run the development servers:
+   cd ../client
+   npm start
+   cd ../server
+   python manage.py runserver
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+5. Access the application in your browser at `http://localhost:3000`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Screenshots
 
-## Learn More
+## Admin Panel
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![alt text](<FireShot Capture 002 - Teacher Courses - localhost.png>)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Student Panel
 
-### Code Splitting
+![alt text](<FireShot Capture 003 - Student Courses - localhost.png>)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contributing
 
-### Analyzing the Bundle Size
+Contributions are welcome! Feel free to open issues or pull requests for any improvements or features you'd like to add.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## License
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[MIT License](LICENSE)

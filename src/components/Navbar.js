@@ -114,7 +114,7 @@ export default function Navbar() {
                     <span className="sr-only">Add to Cart</span>
                     <CgShoppingCart className="h-6 w-6" aria-hidden="true" />
                     <div className="absolute top-[-0.6rem] right[-0.6rem] width-[1rem] height-[1rem] flex items-center justify-center">
-                      <p className="text-white mb-0 text-xl">{amount}</p>
+                      <p className="text-white mb-0 text-xl">4</p>
                     </div>
                   </button>
                 </Link>
